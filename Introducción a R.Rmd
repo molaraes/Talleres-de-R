@@ -1,0 +1,78 @@
+---
+title: "Introducción a R"
+author: "Mónica Lara Escalante"
+date: "2022-10-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Vectores 
+
+```{r}
+a<- c(6, 9, 13, 15)
+
+h<- c(8, 5, 6, 9)
+h
+
+a<- c("PAN", "PRI", "MORENA", "PRD")
+a
+
+a<- 1:5
+a
+
+a<-seq(from=0, to=100, by=2)
+a
+
+a<-rep(50, times=100)
+a
+
+```
+
+
+## Objetos 
+
+```{r}
+
+a<-1
+b<-100
+c<- a+b
+c
+
+```
+
+
+
+## Matrices 
+
+```{r}
+cbind(1:5, 6:10, 11:15)
+rbind(1:5, 6:10, 11:15)
+matrix(1:12, nrow=3, ncol=4)
+
+```
+
+
+## Funciones 
+
+```{r}
+
+a<-1
+b<- 100
+suma<- a+b
+suma
+
+```
+
+
+
+## Dataframe 
+```{r}
+base1 <- data.frame("edad" = c(19, 21), "sexo" = c("M", "H"))
+
+library(help="datasets")
+```
+
