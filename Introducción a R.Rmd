@@ -1,78 +1,157 @@
 ---
 title: "Introducción a R"
 author: "Mónica Lara Escalante"
-date: "2022-10-06"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+Usamos R para hacer cálculos, crear objetos y utilizar funciones.
 
+Una función toma los "inputs" --> realiza acciones y produce outputs funcion(argumento)
 
-## Vectores 
-
-```{r}
-a<- c(6, 9, 13, 15)
-
-h<- c(8, 5, 6, 9)
-h
-
-a<- c("PAN", "PRI", "MORENA", "PRD")
-a
-
-a<- 1:5
-a
-
-a<-seq(from=0, to=100, by=2)
-a
-
-a<-rep(50, times=100)
-a
-
-```
-
-
-## Objetos 
+Operaciones aritméticas
 
 ```{r}
-
-a<-1
-b<-100
-c<- a+b
-c
-
+5+3
+5-3
+5/3
 ```
 
-
-
-## Matrices 
+Los objetos los utilizamos para guardar información.
 
 ```{r}
-cbind(1:5, 6:10, 11:15)
-rbind(1:5, 6:10, 11:15)
-matrix(1:12, nrow=3, ncol=4)
-
+resultado <- 5+3
 ```
 
+También pueden ser palabras.
+```{r}
+profesora <- "Mónica"
+profesora <- "Mónica Lara"
+```
 
-## Funciones 
+Podemos ver qué tipo de objetos
+```{r}
+class(resultado)
+class(profesora)
+class(sqrt) #raíz cuadrada
+```
+
+Operadores lógicos
+```{r}
+2==2
+2!=2
+2<2
+2>2
+2<=2
+2>=2
+```
+
+Vector: representa una colección de información guardada en un orden específico.Podemos usar la "c" de concatenar.
 
 ```{r}
-
-a<-1
-b<- 100
-suma<- a+b
-suma
+pob.mundial <- c(2525779, 3026003, 3691173, 4449049, 
+                 5320817, 6127700,6916183)
+pob.mundial
 
 ```
 
-
-
-## Dataframe 
+Características del vector
 ```{r}
-base1 <- data.frame("edad" = c(19, 21), "sexo" = c("M", "H"))
+length(pob.mundial)
+sort(pob.mundial) #de menor a mayor
+sort(pob.mundial,decreasing=TRUE) #de mayor a menor
+```
+Máximos y mínimos
+```{r}
+max(pob.mundial)
+min(pob.mundial)
+which.max(pob.mundial)
+which.min(pob.mundial)
+```
 
-library(help="datasets")
+La c también se puede utilizar para combinar dos vectores
+```{r}
+pop.first <- c(2525779, 3026003, 3691173)
+pop.second <- c(4449049, 5320817, 6127700, 6916183)
+pop.all <- c(pop.first, pop.second)
+pop.all
+```
+
+Para acceder a valores específicos de los vectores utilizamos los corchetes. Se llama "indexing"
+```{r}
+pob.mundial[2]
+pob.mundial[c(2, 4)]
+pob.mundial[c(4, 2)]
+pob.mundial[-3]
+```
+
+Podemos hacer una operación
+```{r}
+pop.million <- pob.mundial/1000
+pop.million
+
+```
+
+Un vector de factores
+```{r}
+x.f <- factor(c("rojo","azul","verde","azul","verde"))
+x.f
+class(x.f)
+levels(x.f) #niveles de los factores
+
+```
+
+Con la función rep ( ) replicamos el valor de x cinco veces (o el numero que se nos antoje)
+
+```{r}
+x <- 7
+rep(x,5)
+rep("Flacso",10)
+```
+
+Secuencias: un vector que sea ascendente o descendente
+```{r}
+year <- seq(from = 1950, to = 2010, by = 10)
+year
+seq(from = 2010, to = 1950, by = -10)
+1950:2010
+```
+
+Data frames
+```{r}
+Nombre <- c("María", "Juan", "Guadalupe", "José", "Francisco")
+Edad <- c(30, 25, 60, 45, 15)
+Sexo <- factor(c("Femenino","Masculino","Femenino","Masculino","Masculino"))
+tabla <- data.frame(Nombre=Nombre, Edad=Edad, Sexo= Sexo)
+tabla
+
+tabla$Edad
+class(tabla$Edad)
+mean(tabla$Edad)
+
+tabla$Estado_Civil <- c("Soltero","Casado","Viudo","Divorciado","Casado")
+tabla
+
+names(tabla)
+tabla[1,]
+tabla[3,]
+tabla[,2]
+tabla[,4]
+tabla[1,4]
+tabla[c(1,2),]
+tabla[,c(2,4)]
+tabla[1:4,]
+
+tabla[tabla$Edad > 30, ]
+tabla[tabla$Estado_Civil=="Casado",]
+tabla[tabla$Estado_Civil=="Casado" & tabla$Edad < 20,]
+tabla[tabla$Estado_Civil=="Casado" & tabla$Edad < 20,1]
+tabla[tabla$Estado_Civil=="Casado" & tabla$Edad < 20,]$Nombre
+tabla[tabla$Estado_Civil=="Casado" | tabla$Edad < 30,1]
+tabla[tabla$Estado_Civil=="Casado" | tabla$Edad < 30,]$Nombre
+
+setwd("C:/Users/molar/Dropbox/2024_Trabajos/FLACSO/Taller estadística/Scripts")
+write.csv(tabla,"tabla-de-personas.csv")
+
+
 ```
 
