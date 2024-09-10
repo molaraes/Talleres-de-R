@@ -82,12 +82,19 @@ concentrado <- concentrado %>%
   arrange(folioviv)
 ```
 
-#Crear una variable con el número de fila
+Crear una variable con el número de fila
 ```{r}
-concentrado <- mutate(concentrado, Fila = row_number()) 
+concentrado <- concentrado %>% 
+  mutate(Fila = row_number()) 
 ```
 
-# Filtrar por observaciones o por variables
+Pasamos la fila al principio
+```{r}
+concentrado <- concentrado %>% 
+  relocate(Fila)
+```
+
+## Filtrar por observaciones o por variables
 
 Podemos seleccionar las variables que nosotros queramos.
 ```{r}
@@ -113,7 +120,7 @@ base_modif <- concentrado %>%
   filter(tam_loc<4, sexo_jefe=="2")
 ```
 
-Para contar (mujeres que viven en localidades 1, 2, 3)
+Para contar (mujeres o que viven en localidades 1, 2, 3)
 ```{r}
 concentrado %>% 
   filter(tam_loc<4 & sexo_jefe=="2") %>% 
@@ -130,6 +137,9 @@ tabla
 tabla_con_totales <- addmargins(tabla)
 tabla_con_totales
 ```
+
+##Ejercicios
+
 1. ¿Cuántas con mujeres y son de estrato socioeconómico bajo?
 2. ¿Cuántos son hombres y son de estrato socioeconómico bajo?
 3. ¿Cuántas son mujeres y viven en hogares "ampliados"?
