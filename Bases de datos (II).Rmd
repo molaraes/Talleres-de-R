@@ -84,7 +84,7 @@ Ahora por facilidad, la convertiremos en estilo factor.
 ```{r}
 concentrado <- concentrado %>% 
   mutate(sexo_jefe = factor(sexo_jefe,
-  levels = c("Hombre", "Mujer"),  
+  levels = c(1, 2),  
 labels = c("Hombre", "Mujer"))) 
 ```
 
