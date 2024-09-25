@@ -10,7 +10,7 @@ output: html_document
 2. ¿Cuántos son hombres jefes de hogar y son de estrato socioeconómico bajo?
 3. ¿Cuántas son mujeres jefas de hogar y viven en hogares "ampliados"?
 4. ¿Cuántos son hombres jefes de hogar y viven en hogares "ampliados"?
-5. Convierte en variable dummy el tamaño de localidad: menos de 2500 habitantes e igual o mayor a 2500 habitantes. ¿Cuántos hogares están en cada categoría?
+5. Convierte en variable dummy el tamaño de localidad: una categoría con localidades de menos de 2500 habitantes y otra categoría con localidades de 2500 o más habitantes. ¿Cuántos hogares están en cada categoría?
 6. Recodifica la variable de estrato socioeconómico en bajo y alto. ¿Cuántos hogares están en cada categoría?
 7. Descarga la base de datos "viviendas.csv". Une la base de datos de vivienda con la base de datos de hogar y responde, ¿cuántas viviendas son departamentos en edificios y jefaturas de hogar femeninas?
 8. Descarga el csv que corresponde a los ingresos del programa de jóvenes construyendo el futuro "ingresos_jcf". Por folio de vivienda, folio del hogar e integrante, convierte de wide a long los ingresos del primer mes, segundo mes, tercer mes, cuarto mes, quinto mes y sexto mes. ¿Cuál es el ingreso total por cada uno de los meses?
