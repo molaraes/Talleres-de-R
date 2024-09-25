@@ -6,13 +6,13 @@ output: html_document
 
 ## Ejercicios: con la base de datos "concentradohogar":
 
-1. ¿Cuántas con mujeres y son de estrato socioeconómico bajo?
-2. ¿Cuántos son hombres y son de estrato socioeconómico bajo?
-3. ¿Cuántas son mujeres y viven en hogares "ampliados"?
-4. ¿Cuántos son hombres y viven en hogares "ampliados"?
+1. ¿Cuántas con mujeres jefas de hogar y son de estrato socioeconómico bajo?
+2. ¿Cuántos son hombres jefes de hogar y son de estrato socioeconómico bajo?
+3. ¿Cuántas son mujeres jefas de hogar y viven en hogares "ampliados"?
+4. ¿Cuántos son hombres jefes de hogar y viven en hogares "ampliados"?
 5. Convierte en variable dummy el tamaño de localidad: menos de 2500 habitantes e igual o mayor a 2500 habitantes. ¿Cuántos hogares están en cada categoría?
 6. Recodifica la variable de estrato socioeconómico en bajo y alto. ¿Cuántos hogares están en cada categoría?
-7. Une la base de datos de vivienda con la base de datos de hogar y responde, ¿cuántas viviendas son departamentos en edificios y jefaturas de hogar femeninas?
-8. Descarga el csv que corresponde a los ingresos del programa de jóvenes construyendo el futuro. Por folio de vivienda, folio del hogar e integrante, convierte de wide a long los ingresos del primer mes, segundo mes, tercer mes, cuarto mes, quinto mes y sexto mes. ¿Cuál es el ingreso total por cada uno de los meses?
-9. Agrégale etiquetas a la variable de estrato socioeconómico (original) y elabora una tabla de frecuencias con las frecuencias absolutas y relativas.
-10. Calcula las medidas de tendencia central (media, mediana, moda), de posición (cuartiles, deciles y percentiles), de variabilidad (rango, rango intercuartílico, varianza y desviación estándar) de la variable edad.
+7. Descarga la base de datos "viviendas.csv". Une la base de datos de vivienda con la base de datos de hogar y responde, ¿cuántas viviendas son departamentos en edificios y jefaturas de hogar femeninas?
+8. Descarga el csv que corresponde a los ingresos del programa de jóvenes construyendo el futuro "ingresos_jcf". Por folio de vivienda, folio del hogar e integrante, convierte de wide a long los ingresos del primer mes, segundo mes, tercer mes, cuarto mes, quinto mes y sexto mes. ¿Cuál es el ingreso total por cada uno de los meses?
+9. Con la base de datos de concentradohogar, agrégale etiquetas a la variable de estrato socioeconómico (original) y elabora una tabla de frecuencias con las frecuencias absolutas y relativas.
+10. Con la base de datos de concentradohogar, calcula las medidas de tendencia central (media, mediana, moda), de posición (cuartiles, deciles y percentiles), de variabilidad (rango, rango intercuartílico, varianza y desviación estándar) de la variable edad.
