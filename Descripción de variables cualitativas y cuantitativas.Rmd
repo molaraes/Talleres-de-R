@@ -4,14 +4,15 @@ author: "Mónica Lara Escalante"
 output: html_document
 ---
 
-## Ejercicios
+## Ejercicios: con la base de datos "concentradohogar":
 
 1. ¿Cuántas con mujeres y son de estrato socioeconómico bajo?
 2. ¿Cuántos son hombres y son de estrato socioeconómico bajo?
 3. ¿Cuántas son mujeres y viven en hogares "ampliados"?
 4. ¿Cuántos son hombres y viven en hogares "ampliados"?
-5. Convierte en variable dummy el tamaño de localidad: menos de 2500 habitantes e igual o mayor a 2500 habitantes.
-6. Une la base de datos de vivienda con la base de datos de hogar y responde, ¿cuántas viviendas hay por entidad federativa en la muestra?
-7. Descarga el csv que corresponde a ingresos del programa de jóvenes construyendo el futuro. Por folio de vivienda, folio del hogar e integrante, convierte de wide a long los ingresos del primer mes, segundo mes, tercer mes, cuarto mes, quinto mes y sexto mes.
-8. Agrégale etiquetas a la variable de estrato socioeconómico y elabora una tabla de frecuencias con las frecuencias absolutas y relativas.
-9. Calcula las medidas de tendencia central (media, mediana, moda), de posición (cuartiles, deciles y percentiles), de variabilidad (rango, rango intercuartílico, varianza y desviación estándar) de la variable edad.
+5. Convierte en variable dummy el tamaño de localidad: menos de 2500 habitantes e igual o mayor a 2500 habitantes. ¿Cuántos hogares están en cada categoría?
+6. Recodifica la variable de estrato socioeconómico en bajo y alto. ¿Cuántos hogares están en cada categoría?
+7. Une la base de datos de vivienda con la base de datos de hogar y responde, ¿cuántas viviendas hay por entidad federativa en la muestra?
+8. Descarga el csv que corresponde a los ingresos del programa de jóvenes construyendo el futuro. Por folio de vivienda, folio del hogar e integrante, convierte de wide a long los ingresos del primer mes, segundo mes, tercer mes, cuarto mes, quinto mes y sexto mes. ¿Cuál es el ingreso total por cada uno de los meses?
+9. Agrégale etiquetas a la variable de estrato socioeconómico (original) y elabora una tabla de frecuencias con las frecuencias absolutas y relativas.
+10. Calcula las medidas de tendencia central (media, mediana, moda), de posición (cuartiles, deciles y percentiles), de variabilidad (rango, rango intercuartílico, varianza y desviación estándar) de la variable edad.
