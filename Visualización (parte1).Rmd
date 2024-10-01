@@ -61,8 +61,7 @@ pobreza <- pobreza %>%
   mutate(across(5:21, as.numeric))
 ```
 
-Elaboraremos gráficas para una sola variable, cuantitativa o 
-cualitativa. 
+Elaboraremos gráficas para una sola variable cuantitativa.
 
 
 ##Variables cuantitativas 
