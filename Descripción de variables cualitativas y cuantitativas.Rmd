@@ -18,4 +18,4 @@ Haz una tabla cruzada con la variable nueva y la original para comparar los resu
 8. Descarga el csv que corresponde a los ingresos del programa de jóvenes construyendo el futuro "ingresos_jcf". Por folio de vivienda, folio del hogar e integrante, convierte de wide a long los ingresos del primer mes, segundo mes, tercer mes, cuarto mes, quinto mes y sexto mes. ¿Cuál es el ingreso total por cada uno de los meses?
 9. Con la base de datos de concentradohogar, agrégale etiquetas a la variable de estrato socioeconómico (original) y elabora una tabla de frecuencias con las frecuencias absolutas y relativas.
 10. Con la base de datos de concentradohogar, calcula las medidas de tendencia central (media, mediana, moda), de posición (cuartiles, deciles y percentiles), de variabilidad (rango, rango intercuartílico, varianza y desviación estándar) de la variable edad de la jefatura del hogar.
-11. Interpreta los resultados.
+11. Interpreta los resultados de manera general donde contemples las 10 preguntas anteriores. ¿Qué sobresale, qué diferencias hay entre jefaturas femeninas y masculinas, etc?
