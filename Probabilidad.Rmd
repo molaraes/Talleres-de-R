@@ -51,9 +51,6 @@ La probabilidad marginal es la probabilidad de uno de los eventos.
 La probabilidad condicional es la probabilidad de que ocurra un evento A, dado
 que ocurre un evento B.
 
-Por ejemplo, en la base de datos de LAPOP México 2021, se les pregunta
-a las personas ¿qué tanto confía en que el gobierno nacional hace lo correcto y 
-obtenemos los siguientes resultados:
 
 Ejercicio 1. Una ciudad es divida en Distritos A, B y C, con el 20%, 40% y el 40% de los votantes registrados respectivamente. Los votantes registrados que aparecen como demócratas son 50% en A, 25% en B y 75% en C. Se escoge un votante aleatoriamente de la ciudad. 
 i. Encuentre la probabilidad de que el votante esté inscrito como demócrata.
