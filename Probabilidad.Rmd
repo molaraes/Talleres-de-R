@@ -139,7 +139,7 @@ test[covid=='No'] <- sample(c('Neg','Pos'), size=sum(covid=='No'), replace=TRUE,
 
 Cuando una persona está enferma.
 ```{r}
-test[covid=='Yes'] <- sample(c('Neg','Pos'), size=sum(covid=='Yes'), replace=TRUE, prob=c(0.1, 0.9))
+test[covid=='Yes'] <- sample(c('Neg','Pos'), size=sum(covid=='Yes'), replace=TRUE, prob=c(0.9, 0.1))
 ```
 
 
