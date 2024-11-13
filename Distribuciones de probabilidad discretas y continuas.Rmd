@@ -1,0 +1,338 @@
+---
+title: "Distribuciones de probabilidad discretas y continuas"
+author: "Mónica Lara Escalante"
+output: html_document
+---
+
+## Distribución binomial
+R tiene 4 funciones para el cálculo de una distribución  binomial:
+
+dbinom(x, size, prob, log = F): nos da los resultados de la función de densidad
+
+pbinom(q, size, prob, lower.tail = T, log.p = F): nos da los resultados 
+de la función de distribución acumulada 
+
+qbinom(p, size, prob, lower.tail = T, log.p = F): nos da los cuantiles
+
+rbinom(n, size, prob): nos da un vector de valores binomiales aleatorios
+
+x, q: Vector de cuantiles.
+
+p: Vector de probabilidades.
+
+n: Número de observaciones
+
+size: Números de ensayos(debe ser cero o más).
+
+prob: Probabilidad de éxito en cada ensayo.
+
+log, log.p: Parámetro booleano, si es TRUE, las probabilidades p se ofrecen 
+como log(p).
+
+lower.tail: Parámetro booleano, si es TRUE (por defecto), las probabilidades 
+son P[X < x], de lo contrario, P [X > x].
+
+Ejercicios:
+
+Queremos tirar un dado 7 veces y contar cuantas veces obtenemos el número de 5.
+Variable aleatoria: número de cincos
+
+¿Cuál es la probabilidad de obtener 3 cincos?
+
+```{r}
+n<- 7
+x<- 3
+p<- 1/6 
+  
+dbinom(x, n, p)
+```
+
+¿Cuál es la probabilidad de obtener menos o igual de 2 cincos en 7 intentos?
+procedemos igual que el apartado anterior, pero esta vez, 
+especificamos todos los casos posibles: 2 cincos, 1 cinco o 0 cincos.
+
+```{r}
+n<- 7
+x<- c(2, 1, 0)
+p<- 1/6 
+
+
+dbinom(x, n, p)
+```
+
+Nos devuelve las probabilidades de los eventos: 2 1 0 respectivamente.
+
+Si queremos la probabilidad acumulada, empleamos la función suma:
+```{r}
+  
+sum(dbinom(x, n, p))
+```
+
+
+También lo podemos sacar con pbinom
+```{r}
+k <- 2      # número de éxitos deseados
+pbinom(k, n, p)
+```
+
+Ahora bien, si se quiere ver qué valores posibles mínimos de la variable X, que tengan una probabilidad de ocurrir, por ejemplo, en torno al 90%, procedemos tal y como sigue:
+```{r}
+qbinom(0.90, n, p)
+
+```
+
+
+Esto indica que para una probabilidad del 90%, el número mínimo 
+de cincos que aparecer en de siete tiradas de un dado, serán 2.
+
+
+Suponga que hay doce preguntas de opción múltiple en un examen de matemáticas. 
+Cada pregunta tiene cinco posibles respuestas, y sólo una de ellas es correcta.
+Encuentre la probabilidad de tener cuatro o menos respuestas correctas 
+si un estudiante intenta responder a cada pregunta al azar.
+```{r}
+
+p <- 1/5
+n<-12
+k <- 4
+
+pbinom(4, 12, 1/5)
+
+```
+
+La probabilidad de que cuatro o menos preguntas sean contestadas correctamente 
+al azar en un cuestionario de opción múltiple de doce preguntas es del 92,7%.
+
+¿Cuál es la probabilidad de que 2 o 3 preguntas sean respondidas correctamente?
+
+```{r}
+dbinom(c(2,3), 12, 0.2)
+sum(dbinom(2:3,12, 0.2))
+pbinom(2:3, 12, 0.2)
+
+```
+
+
+## Distribución Poisson
+
+La función dpois calcula valores de la función masa de 
+probabilidad de una distribución de Poisson. Sus argumentos son:
+  
+dpois(x, lambda)
+
+donde:
+  
+x: es el valor (o los valores) de la variable para el cual (o los cuales) queremos 
+calcular la función masa de probabilidad
+lambda:  es el parómetro que define la distribución de Poisson.
+
+La función ppois se utiliza para calcular valores de la función de distribución 
+(esto es, probabilidades acumuladas) de una variable 
+con distribución de Poisson. Sus argumentos son:
+  
+ppois(q, lambda)
+
+donde:
+  
+q: es el valor (o los valores) de la variable en el cual (o los cuales) 
+queremos calcular la función de distribución
+lambda: el parámetro que identifica la distribución.
+
+La función qpois se utiliza para calcular los valores de los cuantiles de una 
+distribución de Poisson, es decir, los valores de la variable con distribución 
+de Poisson que dejan a su izquierda una determinada proporción de observaciones.  
+Los argumentos de esta función son:
+
+qpois(p, lambda)
+
+donde:
+  
+p: es la proporción de observaciones que dejará a su izquierda el cuantil 
+en cuestión (es decir, el orden de dicho cuantil)
+lambda: el parámetro de la distribución de Poisson.
+
+La función rpois se utiliza para generar valores aleatorios de una 
+distribución de Poisson y sus argumentos son:
+
+rpois(n, lambda)
+
+donde:
+  
+n: es el número de elementos aleatorios a generar
+lambda: el parámetro que define la distribución de Poisson.
+
+El número promedio de personas enfermas que entran cada 10 minutos en un centro sanitario entre las 10am y las 3pm es 1.8. 
+Suponiendo que dicho número de enfermos sigue una distribución de Poisson.
+
+Calcular la probabilidad de que entre las 12 y 12:10 
+
+Ningún enfermo
+```{r}
+lamda<- 1.8
+x<- 0
+dpois(x, lamda)
+```
+
+
+Exactamente 2 enfermos
+```{r}
+dpois(2, 1.8)
+```
+
+
+Más de 8 enfermos
+```{r}
+ppois(8, 1.8, lower.tail = FALSE)
+```
+
+
+## Distribución normal 
+dnorm devuelve el valor de la función de densidad en un punto (o puntos) 
+determinado. Los argumentos de esta función:
+
+dnorm(x, mean = 0, sd = 1)
+
+siendo:
+  
+x: es el valor (o los valores) de la variable para el cual (o los cuales) queremos calcular la función de densidad
+mean: es la media de la variable
+sd: la desviación estándar de la variable.
+
+Las funciones pnorm, qnorm y rnorm se comportan de forma similar a 
+sus equivalentes para las variables discretas y devuelven valores de 
+la función de distribución, cuantiles y valores aleatorios de una 
+distribución normal, respectivamente. Sus argumentos son los siguientes:
+
+pnorm(q, mean = 0, sd = 1)
+
+qnorm(p, mean = 0, sd = 1)
+
+rnorm(n, mean = 0, sd = 1)
+
+siendo:
+  
+q: el valor (o valores) para el cual (o los cuales) queremos calcular la función de distribución
+p: el orden del cuantil que queremos obtener
+n: el número de valores aleatorios a generar
+mean y sd: los dos parámetros que identifican a la distribución Normal.
+
+Ejercicio: el ingreso promedio (x) de profesionistas ocupados en México
+es de 6,252 con una desviación estándar de 2500 pesos. El ingreso es una
+variable aleatoria que se distribuye de manera normal.
+
+Cuál es la probabilidad de ganar 7000 o menos
+```{r}
+# Parámetros del problema
+mu <- 6252      # Media
+sigma <- 2500   # Desviación estándar
+X <- 7000       # Valor para el cual queremos la probabilidad
+```
+
+```{r}
+# Calcular el valor Z
+Z <- (X - mu) / sigma
+```
+
+```{r}
+# Calcular la probabilidad acumulada hasta X = 7000
+probabilidad <- pnorm(Z)
+```
+
+```{r}
+# Mostrar el resultado
+probabilidad
+```
+
+Cuál es la probabilidad de ganar entre 6000 y 9000
+```{r}
+# Definir los parámetros
+media <- 6252
+desviacion_estandar <- 2500
+
+```
+
+```{r}
+# Calcular la probabilidad acumulada para los límites 6000 y 9000
+probabilidad_9000 <- pnorm(9000, mean = media, sd = desviacion_estandar)
+probabilidad_6000 <- pnorm(6000, mean = media, sd = desviacion_estandar)
+```
+
+```{r}
+# La probabilidad de que el ingreso esté entre 6000 y 9000 es la diferencia
+probabilidad <- probabilidad_9000 - probabilidad_6000
+# Imprimir el resultado
+probabilidad
+```
+
+Cuál es la probabilidad de que el ingreso sea más de 8000
+```{r}
+
+1-pnorm(8000, mean = 6252, sd = 2000)
+
+```
+
+La probabilidad de que el ingreso sea igual o menor a 5000
+
+```{r}
+pnorm(5000, mean = 6252, sd = 2000)
+```
+
+
+El ingreso del 1% más rico
+```{r}
+qnorm(0.99, mean = 6252, sd = 2000)
+```
+
+El ingreso de una muestra aleatoria de 1000 personas
+```{r}
+rnorm(1000, mean = 6252, sd = 2000)
+
+```
+
+## T de student
+Funciones
+dt  -  densidad
+pt  -  distribution acumulada
+qt  -  quantile function
+rt  - generador de numeros aleatorios
+
+Supongamos que tenemos una muestra de 15 trabajadores, con un ingreso promedio de 12,500 pesos y una desviación estándar muestral de 1,200 pesos. Queremos calcular la probabilidad de obtener un valor de t mayor que el valor observado en una prueba de hipótesis para comparar este promedio con un valor de referencia, por ejemplo, 13,000 pesos.
+
+```{r}
+# Definir los parámetros
+media_muestral <- 12500
+media_poblacional <- 13000
+desviacion_estandar_muestral <- 1200
+tamano_muestra <- 15
+```
+
+```{r}
+# Calcular el valor t
+t_observado <- (media_muestral - media_poblacional) / (desviacion_estandar_muestral / sqrt(tamano_muestra))
+
+```
+
+
+```{r}
+# Calcular la densidad t en el valor t observado
+densidad_t <- dt(t_observado, df = tamano_muestra - 1)
+densidad_t
+
+```
+
+```{r}
+# Calcular la probabilidad acumulada hasta el valor t observado
+probabilidad_acumulada <- pt(t_observado, df = tamano_muestra - 1)
+probabilidad_acumulada
+```
+
+## Ejercicios 
+1. Se realiza una encuesta a 200 personas para saber si votarán en las próximas elecciones. Se sabe que el 65% de los encuestados tienen la intención de votar. ¿Cuál es la probabilidad de que exactamente 130 personas voten? ¿Cuál es la probabilidad de que voten 100 o menos? ¿Cuál es la probabilidad de que voten 180 o más? ¿Cuál es la probabilidad de que voten entre 80 y 110?
+2. En un sistema educativo, se sabe que el 80% de los estudiantes aprueban un examen. Se seleccionan al azar 10 estudiantes. ¿Cuál es la probabilidad de que al menos 8 estudiantes aprueben? ¿Cuál es la probabilidad de que aprueben 5 o menos?
+3. En una ciudad, el promedio de robos reportados en una semana es de 3 robos. ¿Cuál es la probabilidad de que en una semana ocurran exactamente 2 robos? ¿1 robo?
+4. En un call center, se reciben en promedio 5 quejas por hora. ¿Cuál es la probabilidad de recibir al menos 6 quejas en una hora? ¿2 quejas por hora?
+5. En un estudio sobre el tiempo que las mujeres dedican a las labores de cuidado (como el cuidado de niños, adultos mayores, o personas con discapacidad), se encontró que la media del tiempo dedicado a estas actividades es de 5.5 horas diarias, con una desviación estándar de 1.5 horas. ¿Cuál es la probabilidad de que una mujer dedique 3.5 horas o menos horas al día a estas tareas? ¿Cuál es la probabilidad de que dedique 4 horas o más?
+6.  En una población, la edad promedio de las personas al casarse por primera vez es de 27 años, con una desviación estándar de 5 años. ¿Cuál es la probabilidad de que una persona se case a los 25 años o antes? ¿Cuál es la probabilidad de que una persona se case entre los 25 y 26 años? ¿26 o más?
+7. En un estudio sobre el tiempo de espera para realizar trámites en una oficina gubernamental, se encontró que el tiempo promedio de espera es de 45 minutos con una desviación estándar de 10 minutos. ¿Cuál es la probabilidad de que un ciudadano/a tenga que esperar 50 minutos o más para realizar su trámite? ¿40 minutos o menos?
+
+
