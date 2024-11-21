@@ -50,17 +50,16 @@ df <- data.frame(
 
 ```{r}
 # Crear el gráfico con ggplot2
-library(tidyverse)
 ggplot(df, aes(x = lanzamientos, y = proporciones)) +
   geom_line(color = "blue") +  # Línea azul para las proporciones
   geom_hline(yintercept = 0.5, color = "red", linetype = "dashed") +  # Línea roja en y=0.5
   labs(x = "Número de lanzamientos", 
        y = "Proporción de caras", 
        title = "Ley de los Grandes Números") +
-  theme_minimal()  # Usamos un tema limpio
+  theme_minimal()  
 ```
 
-## Teorema del Límite Central 
+## Teorema Central del Límite
 
 Ejemplo de los dados
 Sabemos que un dado tiene un promedio de 3.5
@@ -79,9 +78,7 @@ x10 <- c() #declaramos un vector
 k<- 10000
 ```
 
-Para cada valor i desde 1 hasta k, obten una muestra de tamaño 10.
-
-Calcula la media. 
+Para cada valor i desde 1 hasta k, obten una muestra de tamaño 10 y calcula la media. 
 
 ```{r}
 for ( i in 1:k) {
@@ -104,12 +101,12 @@ ggplot(df, aes(x = x10)) +
   theme_minimal()  # Tema minimalista
 ```
 
-Si n tiende a infitnito, podemos obtener una distribución normal por el TLC
+Si n tiende a infitnito, podemos obtener una distribución normal por el TCL
 ```{r}
 x30 <- c()
 x100 <- c()
 x1000 <- c()
-k =10000
+k<-10000
 
 #Para cada i desde 1 hasta k genera una muestra de tamaño 30, 100 y 1000 con números del 1 al 6 con reemplazo. Calcula la media para cada uno.
 
@@ -158,9 +155,7 @@ muestra <- rnorm(100, mean = 50, sd = 10)  # Muestra de 100 datos con media 50 y
 ```{r}
 # Calculamos el estimador puntual de la media (media muestral)
 media_muestral <- mean(muestra)
-cat("El estimador puntual de la media es:", media_muestral, "\n")
-
-#La función cat() en R se utiliza para concatenar y mostrar texto en la consola.
+media_muestral
 ```
 
 Otro estimador puntual común es la varianza muestral. Este estimador utiliza los datos muestrales para estimar la varianza de la población.
@@ -168,7 +163,7 @@ Otro estimador puntual común es la varianza muestral. Este estimador utiliza lo
 ```{r}
 # Estimador puntual de la varianza (varianza muestral)
 varianza_muestral <- var(muestra)
-cat("El estimador puntual de la varianza es:", varianza_muestral, "\n")
+varianza_muestral
 ```
 
 En el caso de variables categóricas, el estimador puntual de la proporción se calcula como la proporción de elementos de una categoría específica en la muestra.
@@ -180,7 +175,7 @@ muestra_binaria <- sample(c(0, 1), size = 100, replace = TRUE)
 ```{r}
 # Estimador puntual de la proporción (proporción de 1s en la muestra)
 proporcion_muestral <- mean(muestra_binaria)  # La media de una muestra binaria es igual a la proporción de 1s
-cat("El estimador puntual de la proporción es:", proporcion_muestral, "\n")
+proporcion_muestral
 ```
 
 Tutoriales recomendados:
