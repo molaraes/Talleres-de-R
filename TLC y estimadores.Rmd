@@ -22,6 +22,7 @@ set.seed(123)  # Fijamos una semilla para reproducibilidad
 ```{r}
 # Vector para almacenar las proporciones
 proporciones <- numeric(n_lanzamientos_max)
+#numeric crea un vector que se llama proporciones de longitud (n_lanzamientos_max)
 ```
 
 
