@@ -1,0 +1,160 @@
+---
+title: "Introducción a R"
+author: "Mónica Lara Escalante"
+output: html_document
+---
+
+Usamos R para hacer cálculos, crear objetos y ejecutar funciones.
+
+Una función toma los "inputs" --> realiza acciones y produce outputs funcion(argumento)
+
+# Objetos
+
+Los objetos los utilizamos para guardar información. La información puede ser un cálculo, un modelo estadístico, una tabla, un gráfico, una base de datos.
+
+```{r}
+resultado <- 5+3
+```
+
+También pueden ser palabras.
+```{r}
+profesora <- "Mónica"
+profesora <- "Mónica Lara"
+```
+
+Podemos ver qué tipo de objetos
+```{r}
+class(resultado)
+class(profesora)
+class(sqrt) #raíz cuadrada
+```
+
+# Operadores lógicos
+
+Se utilizan para realizar comparaciones y manipular valores booleanos (TRUE o FALSE).
+
+```{r}
+2==2
+2!=2
+2<2
+2>2
+2<=2
+2>=2
+```
+
+# Vectores
+
+Representa una colección de información guardada en un orden específico. Son las columnas de nuestra base de datos.
+
+Podemos usar la "c" de concatenar para crear un vector manualmente.
+
+¿Cuáles son los países con más población en el mundo?: India con 1.442 millones; China, 1.409 millones; Estados Unidos, 337 millones; Indonesia, 282 millones y Pakistán, 236 millones (https://www.bankinter.com/blog/economia/los-paises-del-mundo-con-mas-poblacion)
+
+```{r}
+pob.mundial <- c(1442000000, 1409000000, 337000000, 282000000, 236000000)
+#En el paso anterior sólo estamos creando el vector. Sin embargo no podemos ver los valores hasta que lo "imprimamos". El vector se guardó en el ambiente.
+
+pob.mundial
+
+```
+
+El resultado lo muestra utilizando la notación científica. La podemos quitar.
+```{r}
+options(scipen=999)
+```
+
+Podemos ver algunas características de nuestro vector.
+```{r}
+length(pob.mundial) #cuántos casos tiene
+sort(pob.mundial) #ordena de menor a mayor
+sort(pob.mundial,decreasing=TRUE) #ordena de mayor a menor
+max(pob.mundial) #nos da el número máximo
+min(pob.mundial) #nos da el número mínimo
+which.max(pob.mundial) #nos dice dónde está el máximo
+which.min(pob.mundial) #nos dice dónde está el mínimo
+```
+
+La c también se puede utilizar para combinar dos vectores
+```{r}
+paises <- c("India", "China", "Estados Unidos", "Indonesia", "Pakistán")
+paises
+pob_paises <- c(paises, pob.mundial)
+pob_paises
+```
+
+pob_paises es un vector de factores. También podemos ver sus características.
+
+```{r}
+class(pob_paises) #tipo de vector
+levels(pob_paises) #niveles de los factores
+
+```
+
+Podemos hacer una operación a todo un vector
+```{r}
+pob.millon <- pob.mundial/1000000
+pob.millon
+
+```
+
+
+# Data frames
+
+Un data frame es una tabla de datos. Es decir, la información está guardada en filas y columnas, como si fuera una hoja de excel. Las columnas tienen nombres específicos (lo recomendable es que sean sin espacios).
+
+Vamos a crear un data frame de manera manual (en posteriores sesiones importaremos bases de datos existentes a nuestro ambiente).
+
+```{r}
+Nombre <- c("Teresa", "Miguel", "Haydeé", "José", "Diana") #columna 1
+Edad <- c(30, 45, 60, 25, 34) #columna 2
+Sexo <- factor(c("Femenino","Otro","Femenino","Masculino","Otro")) #columna 3
+tabla <- data.frame(nombre=Nombre, edad=Edad, sexo= Sexo) #juntamos columnas
+tabla #la vemos
+```
+
+También podemos ver las características de nuestro data frame
+```{r}
+tabla$edad
+class(tabla$edad)
+mean(tabla$edad)
+names(tabla)
+```
+
+O bien, podríamos agregar una nueva columna ya que tenemos nuestra data.frame.
+
+```{r}
+tabla$profesion <- c("Trabajadora independiente","Sector público","Jubilada","Estudiante","Sector privado")
+tabla
+```
+
+Para acceder a valores específicos de las bases de datos podemos utilizar los corchetes. Se llama "indexing".
+
+Podemos hacerlo con las posiciones de las columnas y filas.
+
+```{r}
+tabla[1,]
+tabla[3,]
+tabla[,2]
+tabla[,4]
+tabla[1,4]
+tabla[c(1,2),]
+tabla[,c(2,4)]
+tabla[1:4,]
+```
+
+O también estableciendo las condiciones con operadores lógicos (vistos arriba).
+
+```{r}
+tabla[tabla$edad > 30, ]
+tabla[tabla$sexo=="Femenino",]
+tabla[tabla$sexo=="Otro" & tabla$edad < 35,]
+tabla[tabla$sexo=="Masculino" | tabla$edad < 30,]
+tabla[tabla$sexo=="Femenino" | tabla$edad < 50,]
+```
+
+Podemos exportar nuestra base de datos a csv.
+```{r}
+setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/MCS/Datos")
+write.csv(tabla,"tabla-de-personas.csv")
+```
+
