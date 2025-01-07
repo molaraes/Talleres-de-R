@@ -1,1 +1,1 @@
-Este repositorio corresponde a los talleres de R para la Maestría en Población y Desarrollo y Gobierno y Asuntos Públicos, generación 2024-2026 de la Facultad Latinoamericana de Ciencias Sociales, sede México
+Este repositorio corresponde a los talleres de R para la Maestría en Población y Desarrollo, Gobierno y Asuntos Públicos y Ciencias Sociales, generación 2024-2026 de la Facultad Latinoamericana de Ciencias Sociales, sede México
