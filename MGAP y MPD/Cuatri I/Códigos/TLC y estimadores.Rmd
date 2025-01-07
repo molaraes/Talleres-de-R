@@ -1,0 +1,188 @@
+---
+title: "Estimadores puntuales"
+author: "Mónica Lara Escalante"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(patchwork)
+```
+
+## Ley de los grandes números
+```{r}
+# Parámetros
+n_lanzamientos_max <- 1000  # Número máximo de lanzamientos (muestra grande)
+probabilidad_cara <- 0.5    # Probabilidad de cara (y cruz también es 0.5)
+set.seed(123)  # Fijamos una semilla para reproducibilidad
+
+```
+
+
+```{r}
+# Vector para almacenar las proporciones
+proporciones <- numeric(n_lanzamientos_max)
+```
+
+
+```{r}
+# Simular lanzamientos y calcular las proporciones acumuladas
+for (i in 1:n_lanzamientos_max) {
+  lanzamientos <- sample(c(0, 1), size = i, 
+                         replace = TRUE, 
+                         prob = c(probabilidad_cara, 1 - probabilidad_cara))
+  proporciones[i] <- mean(lanzamientos)  # Promedio de caras (proporción de 1s)
+}
+```
+
+Sample: simular los lanzamientos de la moneda. En cada iteración del bucle, seleccionamos i lanzamientos, donde i es el número de lanzamientos en esa iteración (desde 1 hasta 1000).
+Proporciones: proporción de caras (promedio de 1s) en los primeros i lanzamientos.
+
+Graficamos
+```{r}
+# Crear un data.frame para ggplot
+df <- data.frame(
+  lanzamientos = 1:n_lanzamientos_max,
+  proporciones = proporciones
+)
+```
+
+```{r}
+# Crear el gráfico con ggplot2
+library(tidyverse)
+ggplot(df, aes(x = lanzamientos, y = proporciones)) +
+  geom_line(color = "blue") +  # Línea azul para las proporciones
+  geom_hline(yintercept = 0.5, color = "red", linetype = "dashed") +  # Línea roja en y=0.5
+  labs(x = "Número de lanzamientos", 
+       y = "Proporción de caras", 
+       title = "Ley de los Grandes Números") +
+  theme_minimal()  # Usamos un tema limpio
+```
+
+## Teorema del Límite Central 
+
+Ejemplo de los dados
+Sabemos que un dado tiene un promedio de 3.5
+Supongamos que lanzamos el dado 10000 veces
+
+```{r}
+resultado <- sample(1:6, 10000, replace=T)
+```
+
+Vamos a sacar muestras de tamaño 10 de las 10000 observaciones anteriores.
+
+Haremos este ejercicio k veces, k=10000
+
+```{r}
+x10 <- c() #declaramos un vector
+k<- 10000
+```
+
+Para cada valor i desde 1 hasta k, obten una muestra de tamaño 10.
+
+Calcula la media. 
+
+```{r}
+for ( i in 1:k) {
+  x10[i] = mean(sample(1:6,10, replace = TRUE))}
+```
+
+# Crear un data.frame para ggplot
+
+```{r}
+df <- data.frame(x10 = x10)
+```
+
+# Crear el histograma con ggplot2
+```{r}
+ggplot(df, aes(x = x10)) +
+  geom_histogram(binwidth = 0.2, fill = "pink", color = "black", alpha = 0.7) +  # Histograma
+  geom_vline(aes(xintercept = mean(x10)), color = "red", linetype = "solid", size = 1) +  # Línea en la media muestral
+  geom_vline(xintercept = 3.5, color = "blue", linetype = "dashed", size = 1) +  # Línea en el valor esperado
+  labs(title = "Muestra = 10", x = "Resultado", y = "Frecuencia") +
+  theme_minimal()  # Tema minimalista
+```
+
+Si n tiende a infitnito, podemos obtener una distribución normal por el TLC
+```{r}
+x30 <- c()
+x100 <- c()
+x1000 <- c()
+k =10000
+
+#Para cada i desde 1 hasta k genera una muestra de tamaño 30, 100 y 1000 con números del 1 al 6 con reemplazo. Calcula la media para cada uno.
+
+for ( i in 1:k){ 
+  x30[i] = mean(sample(1:6,30, replace = TRUE))
+  x100[i] = mean(sample(1:6,100, replace = TRUE))
+  x1000[i] = mean(sample(1:6,1000, replace = TRUE))
+}
+
+```
+
+```{r}
+# Crear los tres histogramas
+p1 <- ggplot(data.frame(x = x30), aes(x)) +
+  geom_histogram(binwidth = 0.5, fill = "green", color = "black") +
+  geom_vline(aes(xintercept = mean(x30)), color = "blue", size = 1) +
+  labs(title = "n=30", x = "resultado", y = "Frecuencia")
+
+p2 <- ggplot(data.frame(x = x100), aes(x)) +
+  geom_histogram(binwidth = 0.5, fill = "lightblue", color = "black") +
+  geom_vline(aes(xintercept = mean(x100)), color = "red", size = 1) +
+  labs(title = "n=100", x = "resultado", y = "Frecuencia")
+
+p3 <- ggplot(data.frame(x = x1000), aes(x)) +
+  geom_histogram(binwidth = 0.5, fill = "orange", color = "black") +
+  geom_vline(aes(xintercept = mean(x1000)), color = "red", size = 1) +
+  labs(title = "n=1000", x = "resultado", y = "Frecuencia")
+
+```
+
+```{r}
+# Combinar los tres gráficos en una sola fila
+(p1 | p2 | p3)
+```
+
+## Estimadores 
+
+Un estimador común para la media poblacional es la media muestral. Este es un estimador puntual que utiliza los datos muestrales para estimar la media de la población.
+
+```{r}
+# Generamos una muestra aleatoria de datos
+set.seed(123)  # Para replicabilidad
+muestra <- rnorm(100, mean = 50, sd = 10)  # Muestra de 100 datos con media 50 y desviación estándar 10
+```
+
+```{r}
+# Calculamos el estimador puntual de la media (media muestral)
+media_muestral <- mean(muestra)
+cat("El estimador puntual de la media es:", media_muestral, "\n")
+
+#La función cat() en R se utiliza para concatenar y mostrar texto en la consola.
+```
+
+Otro estimador puntual común es la varianza muestral. Este estimador utiliza los datos muestrales para estimar la varianza de la población.
+
+```{r}
+# Estimador puntual de la varianza (varianza muestral)
+varianza_muestral <- var(muestra)
+cat("El estimador puntual de la varianza es:", varianza_muestral, "\n")
+```
+
+En el caso de variables categóricas, el estimador puntual de la proporción se calcula como la proporción de elementos de una categoría específica en la muestra.
+```{r}
+# Supongamos que tenemos una muestra binaria de 0s y 1s
+muestra_binaria <- sample(c(0, 1), size = 100, replace = TRUE)
+```
+
+```{r}
+# Estimador puntual de la proporción (proporción de 1s en la muestra)
+proporcion_muestral <- mean(muestra_binaria)  # La media de una muestra binaria es igual a la proporción de 1s
+cat("El estimador puntual de la proporción es:", proporcion_muestral, "\n")
+```
+
+Tutoriales recomendados:
+https://rpubs.com/hllinas/MgEst_Estimacion_teoriaR
+https://rpubs.com/bogotan/TLC
+https://rpubs.com/ranjeetapegu/Central-Limit-Theorem

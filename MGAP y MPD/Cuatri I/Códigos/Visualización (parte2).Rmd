@@ -1,0 +1,241 @@
+---
+title: "Visualización (parte 2)"
+author: "Mónica Lara Escalante"
+output: html_document
+---
+
+Vamos a establecer nuestro directorio de trabajo.
+
+```{r}
+setwd("C:/Users/molar/Dropbox/2024_Trabajos/FLACSO/Taller estadística/Datos")
+```
+
+Ahora cargaremos nuestros paquetes para hoy.
+
+```{r}
+
+library(readxl) 
+library(RColorBrewer) 
+library(tidyverse)
+
+```
+Quitamos notación científica.
+```{r}
+options(scipen=999)
+```
+
+Y cargaremos la base de datos de pobreza multidimensional.
+
+```{r}
+pobreza <- read_excel("pobreza_multidimensional_municipal_2020.xlsx")
+```
+
+Convertimos a numéricas las variables de pobreza (de la columna 5 a la columna 21)
+```{r}
+pobreza <- pobreza %>%
+  mutate(across(5:21, as.numeric))
+```
+
+Elaboraremos gráficas para una sola variable cualitativa.
+
+Los gráficos más utilizados son los gráficos de barras.
+
+Primero vamos a hacer nuestro primer gráfico de barras o columnas.
+
+Al igual que en la sesión anterior, vamos agregando capas a nuestros gráficos.
+
+Datos: incluiremos la variable que queremos graficar, 
+en este caso: el nivel de pobreza.
+
+Primero vemos los estadísticos descriptivos.
+```{r}
+summary(pobreza$pobreza_2020)
+```
+
+Creamos la variable.
+
+```{r}
+pobreza <- pobreza %>% 
+  mutate(pobreza_2020_2=
+            case_when((pobreza_2020 < 2800) ~ "Bajo",
+                      (pobreza_2020 >= 2800) & (pobreza_2020 < 8200) ~ "Medio bajo",
+                      (pobreza_2020 >= 8200) & (pobreza_2020 < 21365) ~ "Medio alto",
+                      (pobreza_2020 >= 21365) ~ "Alto"
+  ))
+```
+
+La vemos.
+```{r}
+table(pobreza$pobreza_2020_2)
+```
+Vemos que lo ordenó alfabéticamente. Ordenamos niveles.
+
+```{r}
+pobreza <- pobreza %>% 
+  mutate(pobreza_2020_2=factor(pobreza_2020_2, 
+                                  levels=c("Bajo", "Medio bajo", "Medio alto", "Alto")))
+```
+
+Graficamos
+
+```{r}
+
+pobreza %>% 
+  ggplot(aes(x=pobreza_2020_2))
+
+```
+
+Ahora agregaremos la geometría
+
+```{r}
+
+pobreza %>% 
+  ggplot(aes(x=pobreza_2020_2)) +
+  geom_bar()
+
+```
+
+Quitamos los NAs.
+```{r}
+
+pobreza %>% 
+  filter(!is.na(pobreza_2020_2)) %>% 
+  ggplot(aes(x=pobreza_2020_2)) +
+  geom_bar()
+
+```
+
+
+
+Podemos voltear la geometría
+
+```{r}
+
+pobreza %>% 
+  filter(!is.na(pobreza_2020_2)) %>% 
+  ggplot(aes(x=pobreza_2020_2))+
+  geom_bar()+
+  coord_flip()
+
+```
+
+Aunque, se ve mejor como estaba antes.
+
+Lo coloreamos con RcolorBrewer. Primero escogemos paleta.
+```{r}
+paleta <- brewer.pal(n = 4, name = "Spectral")
+```
+
+Ahora sí lo coloreamos.
+```{r}
+pobreza %>% 
+  filter(!is.na(pobreza_2020_2)) %>% 
+  ggplot(aes(x=pobreza_2020_2, fill=pobreza_2020_2))+
+  geom_bar()+
+  scale_fill_manual(values = paleta) +
+  theme_classic()
+```
+
+Le cambiamos títulos y ejes
+```{r}
+pobreza %>% 
+  filter(!is.na(pobreza_2020_2)) %>% 
+  ggplot(aes(x=pobreza_2020_2, fill=pobreza_2020_2))+
+  geom_bar()+
+  scale_fill_manual(values = paleta) +
+  theme_classic()+
+  labs(
+    title = "Nivel de pobreza en México a nivel municipal, 2020",
+    x= "Nivel",
+    y= "Frencuencia",
+    caption= "Elaboración propia con datos del CONEVAL",
+    fill= ""
+  )
+```
+
+En lugar de la frecuencia, quiero el porcentaje.
+
+
+```{r}
+pobreza %>% 
+  filter(!is.na(pobreza_2020_2)) %>% 
+  count(pobreza_2020_2) %>% 
+  mutate(pct = prop.table(n)) %>% 
+  ggplot(aes(x = pobreza_2020_2, y = pct, fill = pobreza_2020_2, 
+             label = scales::percent(pct)))+
+  geom_col(position = 'dodge') + 
+   scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = paleta) +
+  theme_classic()+
+  labs(
+    title = "Nivel de pobreza en México a nivel municipal, 2020",
+    x= "Nivel",
+    y= "Porcentaje",
+    caption= "Elaboración propia con datos del CONEVAL",
+    fill= ""
+  )
+```
+
+
+Ahora le agregamos las etiquetas de los datos
+```{r}
+pobreza %>% 
+  filter(!is.na(pobreza_2020_2)) %>% 
+  count(pobreza_2020_2) %>% 
+  mutate(pct = prop.table(n)) %>% 
+  ggplot(aes(x = pobreza_2020_2, y = pct, fill = pobreza_2020_2, 
+             label = scales::percent(pct)))+
+  geom_col(position = 'dodge') + 
+   scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = paleta) +
+  theme_classic()+
+  labs(
+    title = "Nivel de pobreza en México a nivel municipal, 2020",
+    x= "Nivel",
+    y= "Porcentaje",
+    caption= "Elaboración propia con datos del CONEVAL",
+    fill= ""
+  )+
+  geom_text(position = position_dodge(width = .9),    
+          vjust = -0.5,    
+          size = 2,
+          colour = "black")
+
+
+```
+
+Por último modificamos el estilo del título y el caption.
+```{r}
+pobreza %>% 
+  filter(!is.na(pobreza_2020_2)) %>% 
+  count(pobreza_2020_2) %>% 
+  mutate(pct = round(prop.table(n), digits=2)) %>% 
+  ggplot(aes(x = pobreza_2020_2, y = pct, fill = pobreza_2020_2, 
+             label = scales::percent(pct)))+
+  geom_col(position = 'dodge') + 
+   scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = paleta) +
+  theme_classic()+
+  labs(
+    title = "Nivel de pobreza en México a nivel municipal, 2020",
+    x= "Nivel",
+    y= "Porcentaje",
+    caption= "Elaboración propia con datos del CONEVAL",
+    fill= ""
+  )+
+  geom_text(position = position_dodge(width = .9),    
+          vjust = -0.5,    
+          size = 2,
+          colour = "black")+
+  theme(
+    plot.title = element_text(color = "black", size = 14, face = "bold"),
+    plot.caption = element_text(face = "italic")
+  )
+```
+
+##Ejercicios
+
+1. Realiza un histograma con alguna de las variables de pobreza.
+2. Realiza un diagrama de densidad con alguna de las variables de pobreza.
+3. Realiza un boxplot con alguna de las variables de pobreza.
+4. Realiza un gráfico de barras con alguna de las variables de pobreza.
