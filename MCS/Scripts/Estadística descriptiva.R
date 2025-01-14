@@ -41,10 +41,10 @@ write.csv(tabla,"tabla-de-personas.csv")
 
 # Paquetería --------------------------------------------------------------
 
-install.packages("tidyverse") 
-install.packages("janitor")
-install.packages("readxl")
-install.packages("modeest")
+install.packages("tidyverse") #Para manipular las variables
+install.packages("janitor") #Para limpiar nombres y crear tablas de frecuencias
+install.packages("readxl") #Para importar datos de excel
+install.packages("modeest") #Para calcular moda
 library(modeest)
 library(janitor)
 library(tidyverse) 
@@ -55,10 +55,8 @@ library(readxl)
 
 #Vamos a abrir la base de datos del World Justice Project de 2024, quienes calculan un índice del Estado de Derecho.
 getwd()  # Muestra el directorio de trabajo actual
-setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/MCS/Datos")
-
-#Establece directorio de trabajo
-estado_derecho <- read_excel("estado_derecho.xlsx")
+setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/MCS/Datos") #Establece directorio de trabajo
+estado_derecho <- read_excel("estado_derecho.xlsx") #Abre la base de datos
 
 # Varios comandos para explorar nuestra base de datos
 glimpse(estado_derecho)
