@@ -14,7 +14,6 @@ pacman::p_load("haven", "tidyverse")
 #Establecemos nuestro directorio de trabajo
 setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/Taller estadística/Datos")
 
-
 #Abrimos nuestros datos
 encig <- read_csv("encig2023_01_sec1_A_3_4_5_8_9_10.csv")
 
@@ -87,6 +86,8 @@ confint(l.model, level=0.95)
 
 #~ 1 indica que solo se incluirá el término constante (el intercepto) y no se incluirán otras variables como predictores.
 
+#Otra forma rápida
+t.test(encig2$A1_5, mu=0, alternative=c("two.sided"))
 
 # Intervalo de confianza para una proporción ------------------------------
 
@@ -140,6 +141,7 @@ superior95 <- pgorro+margen95
 inferior99 <- pgorro-margen99
 superior99 <- pgorro+margen99
 
+#Manera rápida
 prop.test(37509, 38150, p=NULL, 
           alternative=c("two.sided"), 
           conf.level=0.95)
