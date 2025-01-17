@@ -62,6 +62,7 @@ base_modif <- base_modif %>%
 #Vemos la variable
 table(base_modif$region)
 
+# Realizamos el cálculo de los intervalos:
 
 dat <- summarySE(base_modif, measurevar="A1_5", 
                  groupvars="region")
