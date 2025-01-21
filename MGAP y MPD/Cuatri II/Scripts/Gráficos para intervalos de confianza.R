@@ -99,7 +99,7 @@ dat <- base_modif %>%  # Asigna el resultado del pipeline a un objeto llamado 'd
   mutate( # Agrega nuevas columnas al data frame generado por 'summarise'
     prop = n / sum(n), # Calcula la proporción de cada grupo respecto al total
     se = sqrt(prop * (1 - prop) / n),  # Calcula el error estándar para cada proporción usando la fórmula binomial
-    margen = 1.96*se
+    margen = 1.96*se # Calcula el margen de error
   )
 
 #Gráfico
