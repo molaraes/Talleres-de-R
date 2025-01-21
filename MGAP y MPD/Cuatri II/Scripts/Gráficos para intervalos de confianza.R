@@ -105,7 +105,7 @@ dat <- base_modif %>%  # Asigna el resultado del pipeline a un objeto llamado 'd
 #Gráfico
 ggplot(dat, aes(x = as.factor(corrup), y = prop)) + 
   geom_bar(stat = 'identity', position = 'dodge')+
-  geom_errorbar(aes(ymin = prop - se, ymax = prop + se),                            
+  geom_errorbar(aes(ymin = prop - margen, ymax = prop + margen),                            
                 width = 0.2,
                 position = position_dodge(0.9))+
   theme_minimal()
