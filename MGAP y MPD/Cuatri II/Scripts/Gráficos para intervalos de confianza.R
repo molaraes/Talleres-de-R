@@ -73,7 +73,7 @@ dat <- summarySE(base_modif, measurevar="A1_5",
 
 #Graficamos
 ggplot(dat, aes(x=region, y=A1_5)) + 
-  geom_errorbar(aes(ymin=A1_5-se, ymax=A1_5+se), 
+  geom_errorbar(aes(ymin=A1_5-ci, ymax=A1_5+ci), 
                 colour="black", width=.1) +
   geom_line() +
   geom_point(size=3, shape=21, fill="white") + # 21 es círculo
@@ -98,7 +98,8 @@ dat <- base_modif %>%  # Asigna el resultado del pipeline a un objeto llamado 'd
   dplyr::summarise(n = n()) %>%  # Calcula el tamaño de la muestra ('n') para cada grupo definido por 'corrup'
   mutate( # Agrega nuevas columnas al data frame generado por 'summarise'
     prop = n / sum(n), # Calcula la proporción de cada grupo respecto al total
-    se = sqrt(prop * (1 - prop) / n)  # Calcula el error estándar para cada proporción usando la fórmula binomial
+    se = sqrt(prop * (1 - prop) / n),  # Calcula el error estándar para cada proporción usando la fórmula binomial
+    margen = 1.96*se
   )
 
 #Gráfico
