@@ -4,6 +4,25 @@
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
 
+Cheatsheet en español: 
+https://diegokoz.github.io/intro_ds/fuentes/ggplot2-cheatsheet-2.1-Spanish.pdf
+
+El ggplot2 se basa en la construcción de gráficos a partir de tres componentes:
+1) Datos, 
+2) Coordenadas y 
+3) Objetos geométricos
+
+Esto será nuestra "gramática de gráficas"
+
+Para visualizar los resultados, nosotres asignamos variables a las propiedades 
+visuales o estéticas
+
+Por ejemplo: los tamaños, colores y posiciones.
+
+De manera genérica, podríamos pensar que el código para el ggplot será 
+de la siguiente manera:
+ggplot(datos)+(geometria)+(esteticas)
+
 
 # Paquetería --------------------------------------------------------------
 install.packages("devtools") #Simplifica las tareas del desarrollo de software, desde la creación hasta la distribución de paquetes
