@@ -8,7 +8,7 @@
 # Previo ------------------------------------------------------------------
 
 #Paquetería
-pacman::p_load("haven", "readxl", "tidyverse", "Rmisc")
+pacman::p_load("tidyverse", "Rmisc")
 
 #El paquete Rmisc nos ayuda a realizar análisis estadísticos básicos y cálculos descriptivos, así como gráficos.
 
