@@ -87,7 +87,7 @@ confint(l.model, level=0.95)
 #~ 1 indica que solo se incluirá el término constante (el intercepto) y no se incluirán otras variables como predictores.
 
 #Otra forma rápida
-t.test(encig2$A1_5, mu=0, alternative=c("two.sided"))
+t.test(encig2$A1_5, mu=0, alternative=c("two.sided"), conf.level=0.95)
 
 # Intervalo de confianza para una proporción ------------------------------
 
