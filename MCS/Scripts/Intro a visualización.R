@@ -29,6 +29,7 @@ install.packages("devtools") #Simplifica las tareas del desarrollo de software, 
 devtools::install_github("kjhealy/socviz")
 
 #Cargamos paquetes
+install.packages("pacman") #instalar pacman
 pacman::p_load("tidyverse", "socviz", "RColorBrewer")
 #Tidyverse para manipulación de datos
 #El paquete socviz fue creado por Kieran Healy como un complemento para su libro Data Visualization: A Practical Introduction.
