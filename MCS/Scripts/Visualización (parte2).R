@@ -83,7 +83,7 @@ gss_sm %>%
 
 # Gráfico de dispersión ---------------------------------------------------
 
-# ¿Los países ricos tienen una mayor tasa de asaltos? Vamos a ver la relación mediante un diagrama de dispersión.
+# ¿Los países ricos tienen una mayor tasa de donadores de órganos? Vamos a ver la relación mediante un diagrama de dispersión.
 
 # Tres cosas clave de un diagrama de dispersión: nos dice si hay una relación lineal, nos dice si es positiva o negativa, nos dice si hay datos atípicos.
 
@@ -110,7 +110,7 @@ organdata %>%
   ) +
   theme_classic() # Usamos un tema clásico para el gráfico
 
-# Podemos agregar una variable categórica que coloree los puntos.
+# Podemos agregar una variable categórica que rellene de color los puntos.
 
 # ¿Cómo varía el asunto de la donación entre los diferentes regímenes de bienestar?
 
