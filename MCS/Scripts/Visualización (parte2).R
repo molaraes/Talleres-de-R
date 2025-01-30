@@ -131,8 +131,7 @@ organdata %>%
   theme_classic() + # Tema clásico
   scale_fill_brewer(palette = "Set2") # Paleta de colores para los valores de "world"
 
-
-# Otras funciones de manipulación de datos --------------------------------
+# Gráficos de caja y bigotes y una variable cuali ---------------------------------------------------
 
 # ¿Qué pasa si queremos ver la distribución del gasto en salud por régimen?
 
