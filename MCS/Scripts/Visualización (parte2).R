@@ -134,6 +134,19 @@ organdata %>%
 
 # Otras funciones de manipulación de datos --------------------------------
 
+# ¿Qué pasa si queremos ver la distribución del gasto en salud por régimen?
+
+organdata %>% 
+  filter(!is.na(world)) %>% 
+  ggplot(aes(x=world, y=health, fill=world)) +
+  geom_boxplot()+
+  geom_text(data=. %>% 
+              group_by(world) %>%  
+              filter(health %in% boxplot.stats(health, coef=1.4)$out),
+            aes(label=country, y=health), nudge_x=0.1, colour="red", size=3, hjust=0)
+
+# Otras funciones de manipulación de datos --------------------------------
+
 #https://es.r4ds.hadley.nz/05-transform.html
 #https://rstudio.github.io/cheatsheets/translations/spanish/data-wrangling_es.pdf
 
