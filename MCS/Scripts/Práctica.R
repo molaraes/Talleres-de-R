@@ -6,8 +6,8 @@
 
 # De alguna de las bases de datos de socviz:
 # 1. Escoge una variable cuantitativa y calcula:
-# Medidas de tendencia central
-# Medidas de dispersión
+# Medidas de tendencia central (media, moda y mediana)
+# Medidas de dispersión (varianza y desviación estándar)
 # Mínimo y máximo
 # 2. Elabora un histograma de la variable que escogiste en el punto 1
 # 3. Escoge una variable cualitativa y elabora:
