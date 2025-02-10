@@ -97,3 +97,5 @@ y = prop, fill = as.factor(analfabetismo))) +
                 width = 0.2,
                 position = position_dodge(0.9))
 
+# Ejercicio 
+# Replicar el prop.test, interpretar los resultados y graficar la diferencia de proporciones entre el grado de marginación y alguna de las otras variables de la base de datos.
