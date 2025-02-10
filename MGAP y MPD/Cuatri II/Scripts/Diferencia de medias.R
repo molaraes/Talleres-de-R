@@ -1,5 +1,5 @@
 # =========================================================
-# Intervalos de confianza para la media de dos poblaciones
+# Intervalos de confianza para la diferencia de medias
 # Fecha: 27/01/2024
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
@@ -93,7 +93,7 @@ ggplot(dat, aes(x=SEXO, y=P6_11A_09_1)) +
     x="Sexo",
     y="Horas de lunes a viernes",
     title="Promedio del tiempo dedicado al apoyo en la realización de tareas, por sexo", 
-    caption="Elaboración propia con ENUT (219)")+
+    caption="Elaboración propia con ENUT (2019)")+
   theme_classic()
 
 
@@ -116,12 +116,12 @@ library(socviz)
 data(county_data) 
 
 
-#La base de datos viene por condado-estado. Vamos a calcular la diferencia en el porcentaje de votos del partido republicano 216 y el porcentaje de votos del partido republicano en 212 para ver el efecto Trump.
+#La base de datos viene por condado-estado. Vamos a calcular la diferencia en el porcentaje de votos del partido republicano 2016 y el porcentaje de votos del partido republicano en 2012 para ver el efecto Trump.
 
 #Se utiliza t.test() con el argumento paired = TRUE, ya que las observaciones "antes" y "después" corresponden a los mismos condados.
 
 county_data <- county_data %>% 
-  filter(!is.na(per_gop_2016) & !is.na(per_gop_212))
+  filter(!is.na(per_gop_2016) & !is.na(per_gop_2012))
 
 #Diferencia de medias 
 t.test(county_data$per_gop_2016, county_data$per_gop_2012, paired = TRUE)
