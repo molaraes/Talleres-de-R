@@ -21,7 +21,7 @@ base_marginacion <- read_excel("IMM_2020.xlsx",
 #Vamos a hacer una muestra
 set.seed(1234)
 
-muestra <- base_marginacion[sample(nrow(base_marginacion), size=1235), ]
+muestra <- base_marginacion[sample(nrow(base_marginacion), size=1000), ]
 
 #Vamos a comparar el analfabetismo a partir del alto y bajo grado de marginación.
 
