@@ -43,7 +43,7 @@ muestra <- muestra %>%
 mean(muestra$ANALF)
 
 muestra <- muestra %>% 
-  mutate(analfabetismo = ifelse(ANALF >= 10.27287,"Analfabetismo_mayor","Analfabetismo_menor"))
+  mutate(analfabetismo = ifelse(ANALF >= 10.25291,"Analfabetismo_mayor","Analfabetismo_menor"))
 
 table(muestra$analfabetismo)
 
