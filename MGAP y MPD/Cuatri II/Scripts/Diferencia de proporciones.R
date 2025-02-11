@@ -52,12 +52,13 @@ table(muestra$analfabetismo)
 
 table(muestra$analfabetismo, muestra$grado)
 
-n1 <- 17+572 #grupo de bajo grado de marginación
-n2 <- 466+180 #grupo de alto grado de marginación
+
+n1 <- 15+467 #grupo de bajo grado de marginación
+n2 <- 373+145 #grupo de alto grado de marginación
 
 #Ahora, de ambos grupos de marginación, queremos ver quienes tienen mayor analfabetismo
-prop1 <- 17/n1
-prop2 <- 466/n2
+prop1 <- 15/n1
+prop2 <- 373/n2
 
 #Y la diferencia
 diferencia <- prop1-prop2
