@@ -77,7 +77,16 @@ inferior <- diferencia-margen
 superior <- diferencia+margen
 
 #Manera rápida
-prop.test(x =c(17, 466), n =c(589,646))
+prop.test(x =c(15, 373), n =c(482,518),
+          alternative=c("two.sided"))
+
+prop.test(x =c(15, 373), n =c(482,518),
+          alternative=c("greater"))
+
+prop.test(x =c(15, 373), n =c(482,518),
+          alternative=c("less"))
+  
+  
 
 #Ahora graficamos:
 
@@ -101,7 +110,7 @@ y = prop, fill = as.factor(analfabetismo))) +
 
 # Práctica ----------------------------------------------------------------
 
-#Replica el ejercicio de diferencia de proporciones con la variable de grado de marginación que generamos y otra de las variables de la base de datos. Interpreta los resultados, ¿cuál es la hipótesis nula y cuál es la hipótesis alternativa?, ¿se rechaza o no se rechaza la hipótesis nula?
+#Replica el ejercicio de diferencia de proporciones con la variable de grado de marginación que generamos y otra de las variables de la base de datos. Interpreta los resultados, ¿cuál es la hipótesis nula y cuál es la hipótesis alternativa?, ¿se rechaza o no se rechaza la hipótesis nula? (Hacer el ejercicio de cola izquierda, ambas colas y cola derecha).
 
 #Un investigador afirma que la edad promedio de los migrantes internacionales que llegan a la Ciudad de México es mayor a 35 años. Con una muestra de 200 migrantes recientes, determina las hipótesis para verificar esta afirmación.
 
