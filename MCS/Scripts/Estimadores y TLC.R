@@ -122,13 +122,13 @@ p1 <- ggplot(data.frame(x = x30), aes(x)) +
   theme_minimal()
 
 p2 <- ggplot(data.frame(x = x100), aes(x)) +
-  geom_histogram(binwidth = 0.5, fill = "lightblue", color = "black") +
+  geom_histogram(bins=7, fill = "lightblue", color = "black") +
   geom_vline(aes(xintercept = mean(x100)), color = "red", size = 1) +
   labs(title = "n=100", x = "resultado", y = "Frecuencia")+
   theme_minimal()
 
 p3 <- ggplot(data.frame(x = x1000), aes(x)) +
-  geom_histogram(binwidth = 0.5, fill = "orange", color = "black") +
+  geom_histogram(bins=7, fill = "orange", color = "black") +
   geom_vline(aes(xintercept = mean(x1000)), color = "red", size = 1) +
   labs(title = "n=1000", x = "resultado", y = "Frecuencia")+
   theme_minimal()
