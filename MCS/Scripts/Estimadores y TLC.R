@@ -62,7 +62,6 @@ estimaciones.10 %>%
   theme_minimal()
 
 #¿Qué pasa si hacemos muestras de tamaño 30, tamaño 100?
-#¿Cuál es el promedio de cada una de las estimaciones y cuál se asemeja más al parámetro poblacional?
 
 
 # Teorema del Límite Central ----------------------------------------------
