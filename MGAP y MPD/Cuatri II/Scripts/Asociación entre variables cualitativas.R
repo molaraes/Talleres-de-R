@@ -16,19 +16,29 @@ base <- read_csv("TENBIARE.csv")
 
 # Chi-cuadrada ------------------------------------------------------------
 
+#Notación: X ~ χ²(k), donde k representa los grados de libertad.
+
+#Dominio: Solo toma valores positivos (x ≥ 0).
+
+#Forma: Es asimétrica, sesgada a la derecha. A medida que aumentan los grados de libertad, se vuelve más simétrica y se aproxima a una distribución normal.
+
 #Nos vamos a preguntar si las variables son estadísticamente independientes o no.
 
-#Se dice que las variables son independientes si las distribuciones condicionales de la población son idénticas.
+#Se dice que las variables son independientes si las distribuciones condicionales de la población son idénticas. (Distribuciones condicionales vs distribuciones marginales)
 
 #Dado que nosotres no trabajamos con los datos de la población y normalmente trabajamos con una muestra, testeamos la independencia en los datos de la muestra.
 
 #Vamos a relacionar el hecho de pertencer a una organización o movimiento (PG1_1) al tamaño de localidad (TLOC)
+
 base <- base %>% 
   mutate(PG1_1=factor(PG1_1, levels=c(1,2), 
                       labels=c("Sí", "No"))) %>% 
   mutate(urbano= ifelse(TLOC<4, 1, 0)) %>% 
   mutate(urbano=factor(urbano, levels=c(0,1),
                        labels=c("Rural", "Urbano")))
+
+#Fórmula de chi cuadrada: https://simulacionutp2016.wordpress.com/2016/09/17/prueba-%CF%87%C2%B2-chi-cuadrado/ y grados de libertad: https://slideplayer.es/slide/1373569/
+
 
 #Paso 1. Hacemos la tabla de contigencia para calcular las frecuencias observadas.
 table(base$urbano, base$PG1_1)
@@ -53,12 +63,17 @@ chi_cuadrado <- ((((329-prob_ru_part)^2)/prob_ru_part)+
                    (((7024-prob_ru_nopart)^2)/prob_ru_nopart)+
                    (((736-prob_urb_part)^2)/prob_urb_part)+
                    (((23077-prob_urb_nopart)^2)/prob_urb_nopart))
+
 chi_cuadrado
 
 gl <- (2-1)*(2-1)
 gl
 
-#Nuestra chi-cuadrada crítica, es mayor a la chi-cuadrada teórica, por ello rechazo la hipótesis nula. Esto quiere decir que existe evidencia suficiente para afirmar una relación o asociación entre pertenecer a una zona rural o urbana y participar en algún movimiento u organización política o social.
+# Para obtener el valor de tablase de chi-cuadrada con nivel de significancia 0.05 y 1 grados de libertad:
+valor_chi <- qchisq(1 - 0.05, df = gl)
+print(valor_chi)  # Aproximadamente 3.841459
+
+#Nuestra chi-cuadrada empírica, es mayor a la chi-cuadrada teórica, por ello rechazo la hipótesis nula. Esto quiere decir que existe evidencia suficiente para afirmar una relación o asociación entre pertenecer a una zona rural o urbana y participar en algún movimiento u organización política o social.
 
 options(scipen=999)
 
@@ -71,11 +86,13 @@ chisq.test(base$urbano, base$PG1_1, correct=F)
 
 #Se basa en la diferencia entre los pares concordantes y pares discordantes dentro de los datos.
 
+#Par concordante: Dos observaciones (x₁,y₁) y (x₂,y₂) son concordantes si ambas variables se mueven en la misma dirección. Es decir, si x₂ > x₁ y y₂ > y₁, o si x₂ < x₁ y y₂ < y₁.
+
+#Par discordante: Dos observaciones son discordantes si las variables se mueven en direcciones opuestas. Es decir, si x₂ > x₁ y y₂ < y₁, o si x₂ < x₁ y y₂ > y₁.
+
+#Supongamos que tenemos dos observaciones x, y. Los valores de x son: 2, 3, 5, 1, 4. Y los de Y son: 1, 4, 2, 3, 5. El primer par (obs 1 con obs 2 es concordante).
+
 #Su fórmula es C-D/C+D
-
-#C es el número de pares concordantes (cuando una observación tiene valores más altos en ambas variables que otra observación).
-
-#D es el número de pares discordantes (cuando una observación tiene un valor más alto en una variable, pero más bajo en la otra).
 
 #Haremos una relación entre haber tenido menos, similar o  más oportunidades de educación que sus padres y tener actualmente una menor, mediana o mayor satisfación con su vida.
 
@@ -118,6 +135,11 @@ GoodmanKruskalGamma(tabla, conf.level=0.95)
 
 #Los empates son valores repetidos en una o ambas variables, y afectan cómo se mide la correlación en datos ordinales. 
 
+#Empates en X: Cuando x₁ = x₂ para un par de observaciones
+#Empates en Y: Cuando y₁ = y₂ para un par de observaciones
+#Empates en ambas variables: Cuando x₁ = x₂ y y₁ = y₂
+
+
 #Es poco probable que utilicemos TauA, haremos el ejemplo con TauB.
 
 KendallTauB(tabla, direction="row", conf.level=0.95)
@@ -127,4 +149,8 @@ KendallTauB(tabla, direction="row", conf.level=0.95)
 #El coeficiente es muy cercano a cero y el intervalo de confianza toca el cero por lo que no podemos rechazar la hipótesis nula. Existe la posibilidad de que el coeficiente sea cero.
 
 
+# Ejercicio ---------------------------------------------------------------
+
+
+#1. Calcular chi-cuadrado, Gamma y TauB para un par de variables ordinales de la base de datos. ¿Cuál es el resultado?, ¿hay una asociación entre las variables?
 
