@@ -114,8 +114,7 @@ tabla
 
 GoodmanKruskalGamma(tabla, conf.level=0.95)
 
-#Como el cero está dentro del intervalo no rechazamos la nula. No hay evidencia suficiente para concluir que las variables tienen una relación significativa según el coeficiente gamma.
-
+#Como el cero NO está dentro del intervalo rechazamos la nula. Tenemos evidencia suficiente para afirmar, a un nivel de confianza del 95%, que la satisfacción con la vida se relaciona con el nivel educativo respecto a los padres (quienes criaron)
 
 # Tau de Kendall ----------------------------------------------------------
 
@@ -144,7 +143,7 @@ KendallTauB(tabla, direction="row", conf.level=0.95)
 
 #Direction row: Se evalúa la asociación entre los valores de las filas y los de las columnas, asumiendo que los valores en las filas determinan los de las columnas.
 
-#El coeficiente es muy cercano a cero y el intervalo de confianza toca el cero por lo que no podemos rechazar la hipótesis nula. Existe la posibilidad de que el coeficiente sea cero.
+#El coeficiente es muy cercano a cero y el intervalo de confianza NO toca el cero. Es decir, a un nivel de confianza del 95%, rechazamos la hipótesis nula. Tenemos evidencia suficiente para afirmar que la satisfacción con la vida está relacionada con el nivel educativo de la persona con respecto a sus padres (o a quienes les criaron)
 
 
 # Ejercicio ---------------------------------------------------------------
