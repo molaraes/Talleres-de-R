@@ -104,9 +104,9 @@ base <- base %>%
              PA1>6 & PA1<=10 ~ "Alta"))  %>% 
   mutate(educa=
            case_when(
-             PI3==1 ~ "Menor", 
+             PI3==1 ~ "Mayor", 
              PI3==2 ~ "Similar", 
-             PI3==3 ~ "Mayor")) 
+             PI3==3 ~ "Menor")) 
 
 tabla <- table(base$educa, base$satis)
 tabla
