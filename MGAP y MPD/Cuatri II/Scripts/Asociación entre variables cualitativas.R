@@ -33,9 +33,7 @@ base <- read_csv("TENBIARE.csv")
 base <- base %>% 
   mutate(PG1_1=factor(PG1_1, levels=c(1,2), 
                       labels=c("Sí", "No"))) %>% 
-  mutate(urbano= ifelse(TLOC<4, 1, 0)) %>% 
-  mutate(urbano=factor(urbano, levels=c(0,1),
-                       labels=c("Rural", "Urbano")))
+  mutate(urbano= ifelse(TLOC<4, "Urbano", "Rural"))
 
 #Fórmula de chi cuadrada: https://simulacionutp2016.wordpress.com/2016/09/17/prueba-%CF%87%C2%B2-chi-cuadrado/ y grados de libertad: https://slideplayer.es/slide/1373569/
 
