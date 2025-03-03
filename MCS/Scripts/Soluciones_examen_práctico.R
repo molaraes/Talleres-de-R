@@ -62,13 +62,13 @@ por_pais3 <- datos %>%
   summarise(Media_r_candida=mean(r_candida)) %>% 
   arrange(-Media_r_candida)
 
-#4. Histograma
+#4. Diagrama de caja y brazos
 datos %>% 
   ggplot(aes(x=r_trans))+
   geom_boxplot(color="black", fill="skyblue")+
   labs(title="Distribución del componente de transparencia",
        x="Indicador de transparencia",
-       y="Frecuencia",
+       y="Valores",
        caption="Fuente: elaboración propia con datos de Rodríguez (2022)"
   )+
   theme_minimal()
