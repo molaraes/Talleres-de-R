@@ -1,6 +1,6 @@
 # =========================================================
 # Modelo de regresión lineal simple
-# Fecha: 24/02/2024
+# Fecha: 04/03/2024
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
 
