@@ -143,7 +143,7 @@ R2 <- SS_modelo / SS_total
 
 # Valores específicos:
 # Creo un nuevo data frame con los valores de la variable independiente
-nuevos_datos <- data.frame(health_expenditure_percent = c(0.5, 0.10, 0.25))
+nuevos_datos <- data.frame(health_expenditure_percent = c(5, 10, 15,20))
 #Con la función predict voy a ver los valores de mi variable dependiente, dados ciertos valores de mi variable independiente
 predict(modelo, 
         newdata = nuevos_datos, 
