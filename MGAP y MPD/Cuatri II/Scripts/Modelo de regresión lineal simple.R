@@ -171,7 +171,9 @@ ggplot(data = base, aes(x = health_expenditure_percent, y = life_expectancy_worl
 coeficientes <- tidy(modelo, conf.int = TRUE)
 
 # Graficar los coeficientes con intervalos de confianza
-ggplot(coeficientes, aes(x = term, y = estimate)) +
+coeficientes %>% 
+  filter(term!="(Intercept)") %>% 
+ggplot(aes(x = term, y = estimate)) +
   geom_point(size = 1.5, color = "blue") +  # Punto para la estimación
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2, color = "red") +  # Barras de error
   labs(title = "Resultados del modelo",
