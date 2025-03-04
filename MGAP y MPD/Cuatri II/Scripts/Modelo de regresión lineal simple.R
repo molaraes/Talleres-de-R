@@ -144,8 +144,13 @@ R2 <- SS_modelo / SS_total
 # Valores específicos:
 # Creo un nuevo data frame con los valores de la variable independiente
 nuevos_datos <- data.frame(health_expenditure_percent = c(0.5, 0.10, 0.25))
+#Con la función predict voy a ver los valores de mi variable dependiente, dados ciertos valores de mi variable independiente
+predict(modelo, 
+        newdata = nuevos_datos, 
+        interval = "confidence", 
+        level=0.95)
 
-#O para todos los valores de x
+#¿Pero que pasa si no quiero valores específicos de x sino, para todos los valores de x?
 #Los guardo en una columna en el marco de datos original
 base$salud_pred <- predict(modelo, newdata = base)
 
