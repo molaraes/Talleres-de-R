@@ -152,7 +152,7 @@ predict(modelo,
 
 #¿Pero que pasa si no quiero valores específicos de x sino, para todos los valores de x?
 #Los guardo en una columna en el marco de datos original
-base$salud_pred <- predict(modelo, newdata = base)
+base$esperanza_pred <- predict(modelo, newdata = base)
 
 # Crear la gráfica con puntos y agregar la línea de ajuste (es lo mismo que hicimos al principio)
 
