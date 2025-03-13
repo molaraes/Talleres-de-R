@@ -44,18 +44,18 @@ base %>%
   theme_minimal()
 
 #¿Qué países tienen la esperanza de vida menor?
-base %>% #base de datos
-  arrange(life_expectancy_world_bank) %>% #orden ascendente
-  select(country_name, year, life_expectancy_world_bank) %>% 
-  #selecciono lo que me interesa
-  head() #primeras 6 observaciones
+base %>% #base de datos 
+  arrange(life_expectancy_world_bank) %>% #orden ascendente (de menor a mayor) %>% 
+  group_by(country_name, year) %>% 
+  filter(life_expectancy_world_bank <=43) %>% 
+  select(country_name, year, life_expectancy_world_bank) 
 
 #¿Y el gasto en salud?
 base %>% #base de datos
-  arrange(health_expenditure_percent) %>% #orden ascendente
-  select(country_name, year, health_expenditure_percent) %>% 
-  #selecciono lo que me interesa
-  head() #primeras 6 observaciones
+  filter(health_expenditure_percent>=20) %>% 
+  arrange(-health_expenditure_percent) %>% #de mayor a menor
+  select(country_name, year, health_expenditure_percent) 
+
 
 # Graficamos
 base %>% #mi base 
