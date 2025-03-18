@@ -1,5 +1,5 @@
 # =========================================================
-# Modelo de regresión lineal simple
+# Supuestos del modelo de regresión lineal múltiple
 # Fecha: 17/03/2024
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
