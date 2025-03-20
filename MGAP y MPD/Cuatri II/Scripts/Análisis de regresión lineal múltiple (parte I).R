@@ -97,6 +97,13 @@ modelo_cat <- lm(life_expectancy_world_bank~
 
 summary(modelo_cat)
 
+base <- base %>% 
+  mutate(ingreso=case_when(income_group=="High income"~"Alto",
+                           income_group=="Low income"~"Bajo",
+                           income_group=="Lower middle income"~"Bajo",
+                           income_group=="Upper middle income"~"Alto"
+  ))
+
 
 # Interacciones -----------------------------------------------------------
 
