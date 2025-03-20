@@ -104,6 +104,10 @@ base <- base %>%
                            income_group=="Upper middle income"~"Alto"
   ))
 
+table(base$ingreso)
+
+base <- base %>% 
+  mutate(ingreso=factor(ingreso, levels=c("Bajo", "Alto")))
 
 # Interacciones -----------------------------------------------------------
 
