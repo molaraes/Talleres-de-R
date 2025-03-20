@@ -1,5 +1,5 @@
 # =========================================================
-# Modelo de regresión lineal simple
+# Modelo de regresión lineal múltiple
 # Fecha: 10/03/2024
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
