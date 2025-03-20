@@ -97,6 +97,8 @@ modelo_cat <- lm(life_expectancy_world_bank~
 
 summary(modelo_cat)
 
+# Reducimos las categorías del ingreso
+
 base <- base %>% 
   mutate(ingreso=case_when(income_group=="High income"~"Alto",
                            income_group=="Low income"~"Bajo",
@@ -108,6 +110,16 @@ table(base$ingreso)
 
 base <- base %>% 
   mutate(ingreso=factor(ingreso, levels=c("Bajo", "Alto")))
+
+modelo_cat2 <- lm(life_expectancy_world_bank~
+                    health_expenditure_percent+
+                    education_expenditure_percent+
+                    unemployment+
+                    ingreso, 
+                  data=base)
+
+summary(modelo_cat2)
+
 
 # Interacciones -----------------------------------------------------------
 
