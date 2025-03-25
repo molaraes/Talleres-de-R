@@ -83,6 +83,9 @@ shapiro.test(residuos)
 # Media cero
 mean(residuos) #es muy cercana a cero.
 
+#Podemos hacer un t.test de una media también
+t.test(residuos, mu = 0)
+
 #3. Homocedasticidad: Varianza constante de los errores.
 install.packages("lmtest")
 library(lmtest)
