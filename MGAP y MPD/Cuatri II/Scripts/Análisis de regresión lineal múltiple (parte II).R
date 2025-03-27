@@ -109,3 +109,19 @@ dwtest(modelo_multiple)
 
 #Ho. No hay autocorrelación en los errores
 #Ha. Hay autocorrelación en los errores.
+
+
+#Podemos ver el rendimiento de nuestro modelo
+install.packages("performance")
+install.packages("see")
+install.packages("patchwork")
+install.packages("qqplotr")
+library(performance)
+library(see)
+library(patchwork)
+library(qqplotr)
+
+#El paquete performance en R es una herramienta muy útil para evaluar y comparar modelos estadísticos. 1) Calcula índices de ajuste como R², AIC, BIC, RMSE. 2) Verifica supuestos de los modelos (normalidad, homocedasticidad, multicolinealidad) 3. Detecta valores atípicos e influyentes
+
+result1<- check_model(modelo_multiple)
+plot(result1)
