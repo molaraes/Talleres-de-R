@@ -1,6 +1,6 @@
 # =========================================================
 # Repaso de regresión lineal múltiple
-# Fecha: 5/05/2024
+# Fecha: 05/05/2024
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
 
@@ -53,4 +53,11 @@ data(student.survey)
 
 # 7. Del modelo escogido: comprueba los supuestos de normalidad de los errores, homocedasticidad y multicolinealidad.
 
-# 8. Escoge una de las variables independientes de tu modelo final y grafica los valores predichos de y, a partir de ciertos valores de x.
+# 8. Del modelo escogido, analiza los datos atípicos. Usa cooks.distance().
+# La distancia de Cooks proporciona una medida global de influencia que combina el efecto del apalancamiento (influencia potencial que una observación tiene en función de sus valores en las variables predictoras) y el residuo (residuo grande indica que el modelo no predice bien ese punto específico)
+# Utiliza el siguiente umbral:
+# 4/(n-k-1): 
+# Donde "n" es el número de observaciones y "k" es el número de predictores. 
+# Si la distancia de cooks es mayor al umbral, es influyente la observación.
+
+# 9. Escoge una de las variables independientes de tu modelo final y grafica los valores predichos de y a partir de determinados valores de x (escogidos por ti).
