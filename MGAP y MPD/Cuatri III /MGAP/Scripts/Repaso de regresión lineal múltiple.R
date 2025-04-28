@@ -49,13 +49,13 @@ data(student.survey)
 
 # 4. Estima un modelo de regresión lineal múltiple para explicar el College GPA a partir de: género, edad, high school gpa, distancia de la casa al campus, horas de televisión, ideología política, asistencia a servicios religiosos. Guárdalo como modelo 3.
 
-# 5. Estima un modelo de regresión lineal múltiple para explicar el College GPA a partir de: género en interacción con la edad, high school gpa, distancia de la casa al campus, horas de televisión, ideología política, asistencia a servicios religiosos. Nota: se pueden usar los dos puntos para denotar interacción. Guárdalo como modelo 4.
+# 5. Estima un modelo de regresión lineal múltiple para explicar el College GPA a partir de: género en interacción con la edad, high school gpa, distancia de la casa al campus, horas de televisión, ideología política, asistencia a servicios religiosos. Nota: se pueden usar los dos puntos para denotar interacción, así ge:age. Guárdalo como modelo 4.
 
 # 6. Interpreta los 4 modelos anteriores en términos de: significancia de los coeficientes, significancia global del modelo, R cuadrada e intervalos de confianza. Escoge uno de los cuatro modelos.
 
-# 7. Comprueba los supuestos: normalidad de los errores, homocedasticidad y multicolinealidad.
+# 7. Del modelo escogido: comprueba los supuestos de normalidad de los errores, homocedasticidad y multicolinealidad.
 
-# 8. Extra 1: Supongamos hay una teoría detrás que establece que hay un efecto importante del género en el puntaje GPA.
+# 8. Extra 1: Supongamos hay una teoría detrás que establece que hay un efecto del género en el puntaje GPA.
 
 modelo_base <- lm(co ~ ge, data=student.survey)
 summary(modelo_base)
@@ -73,13 +73,13 @@ modelo_complejo <- lm(co ~.,data=student.survey.modif)
 # Vemos nuestro modelo
 summary(modelo_complejo)
 
-# Buscar con el criterio de BIC (pondera modelos más parsimoniosos)
+# Vamos a valorar cuál es el mejor modelo a partir de criterio de BIC (pondera modelos más parsimoniosos)
 
 # El criterio BIC (Bayesian Information Criterion) o Criterio de Información Bayesiano en regresión lineal múltiple es una medida estadística utilizada para la selección de modelos, similar al AIC pero con una penalización más estricta para la complejidad del modelo.
 
 # Se selecciona el modelo con el menor valor BIC
-# El algoritmo utiliza una estrategia "backward" (hacia atrás), comenzando con un modelo completo e irá eliminando variables una a una para mejorar el criterio de información.
 
+# El algoritmo utiliza una estrategia "backward" (hacia atrás), comenzando con un modelo completo e irá eliminando variables una a una para mejorar el criterio de información.
 
 modelo_BIC_explicativo <-  stepAIC(
   object = modelo_complejo,      
@@ -98,15 +98,17 @@ modelo_BIC_explicativo <-  stepAIC(
 #co ~ ge + hi
 summary(modelo_BIC_explicativo)
 
-# 9. Extra 2: Supongamos que es al revés: creemos que toda las variables de la base de datos tienen un poder predictivo.
+# 9. Extra 2: Supongamos que todas las variables de la base de datos tienen un poder predictivo.
 
 # Estimamos un modelo de regresión con todas las variables.
 modelo_complejo <- lm(co ~.,data=student.survey.modif)
 # El punto . es un operador especial en las fórmulas de R que significa "todas las demás variables"
 summary(modelo_complejo)
 
-# Buscar con el criterio de AIC (pondera modelos predictivos)
+# Elegiremos esta vez el modelo con el criterio de AIC (pondera modelos predictivos)
+
 # El criterio AIC (Akaike Information Criterion) en regresión múltiple es una medida estadística utilizada para comparar y seleccionar modelos.
+
 # Al usar el AIC para la selección de modelos, se busca el modelo con el menor valor de AIC, que representa el mejor equilibrio entre ajuste y parsimonia.
 
 modelo_AIC <- stepAIC(
@@ -118,7 +120,7 @@ modelo_AIC <- stepAIC(
 
 #La información mostrada para cada paso incluye:
   
-#Step: AIC=valor - El valor AIC del modelo actual
+#Step: AIC=valor es el valor AIC del modelo actual
 #La fórmula del modelo actual (ej: co ~ ge + ag + hi + dh + dr + tv + sp + ne + ah + pa + pi + re)
 
 #Una tabla con posibles cambios donde:
