@@ -1,6 +1,6 @@
 # =========================================================
 # Repaso de regresión lineal múltiple
-# Fecha: 5/05/2024
+# Fecha: 06/05/2024
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
 
@@ -55,7 +55,14 @@ data(student.survey)
 
 # 7. Del modelo escogido: comprueba los supuestos de normalidad de los errores, homocedasticidad y multicolinealidad.
 
-# 8. Extra 1: Supongamos hay una teoría detrás que establece que hay un efecto del género en el puntaje GPA.
+# 8. Del modelo escogido, analiza los datos atípicos. Usa cooks.distance().
+# La distancia de Cooks proporciona una medida global de influencia que combina el efecto del apalancamiento (influencia potencial que una observación tiene en función de sus valores en las variables predictoras) y el residuo (residuo grande indica que el modelo no predice bien ese punto específico)
+# Utiliza el siguiente umbral:
+# 4/(n-k-1): 
+Donde "n" es el número de observaciones y "k" es el número de predictores. 
+# Si la distancia de cooks es mayor al umbral, es influyente la observación.
+
+# 9. Extra 1: Supongamos hay una teoría detrás que establece que hay un efecto del género en el puntaje GPA.
 
 modelo_base <- lm(co ~ ge, data=student.survey)
 summary(modelo_base)
@@ -98,7 +105,7 @@ modelo_BIC_explicativo <-  stepAIC(
 #co ~ ge + hi
 summary(modelo_BIC_explicativo)
 
-# 9. Extra 2: Supongamos que todas las variables de la base de datos tienen un poder predictivo.
+# 10. Extra 2: Supongamos que todas las variables de la base de datos tienen un poder predictivo.
 
 # Estimamos un modelo de regresión con todas las variables.
 modelo_complejo <- lm(co ~.,data=student.survey.modif)
@@ -145,4 +152,5 @@ summary(modelo_AIC)
 #El modelo final es:
   #co ~ ge + hi + dr + pa + pi + re
 
-# 10. Extra 3. Haz lo mismo que el punto anterior pero incluyendo todas las posibles interacciones de tus variables. Tip: Se pone la fórmula de las variables entre ()^2 para generar todas sus interacciones. 
+# 11. Extra 3. Haz lo mismo que el punto anterior pero incluyendo todas las posibles interacciones de tus variables. Tip: Se pone la fórmula de las variables entre ()^2 para generar todas sus interacciones. 
+
