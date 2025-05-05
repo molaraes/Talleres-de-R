@@ -59,4 +59,4 @@ data(student.survey)
 # Donde "n" es el número de observaciones y "k" es el número de parámetros. 
 # Si la distancia de cooks es mayor al umbral, es influyente la observación.
 
-# 9. Escoge una de las variables independientes de tu modelo final y grafica los valores predichos de y a partir de determinados valores de x (escogidos por ti).
+# 9. Escoge una de las variables independientes de tu modelo final y grafica los valores predichos de y a partir de determinados valores de x (escogidos por ti). Las demás variables establécelas constantes (en su promedio o con la moda).
