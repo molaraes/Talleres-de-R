@@ -49,7 +49,7 @@ data(student.survey)
 
 # 4. Estima un modelo de regresión lineal múltiple para explicar el College GPA a partir de: género, edad, high school gpa, distancia de la casa al campus, horas de televisión, ideología política, asistencia a servicios religiosos. Guárdalo como modelo 3.
 
-# 5. Estima un modelo de regresión lineal múltiple para explicar el College GPA a partir de: género en interacción con la edad, high school gpa, distancia de la casa al campus, horas de televisión, ideología política, asistencia a servicios religiosos. Nota: se pueden usar los dos puntos para denotar interacción, así ge:age. Guárdalo como modelo 4.
+# 5. Estima un modelo de regresión lineal múltiple para explicar el College GPA a partir de: género en interacción con la edad, high school gpa, distancia de la casa al campus, horas de televisión, ideología política, asistencia a servicios religiosos. Guárdalo como modelo 4.
 
 # 6. Interpreta los 4 modelos anteriores en términos de: significancia de los coeficientes, significancia global del modelo, R cuadrada e intervalos de confianza. Escoge uno de los cuatro modelos.
 
