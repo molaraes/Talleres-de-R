@@ -62,7 +62,9 @@ data(student.survey)
 # Donde "n" es el número de observaciones y "k" es el número de parámetros. 
 # Si la distancia de cooks es mayor al umbral, es influyente la observación.
 
-# 9. Extra 1: Supongamos hay una teoría detrás que establece que hay un efecto del género en el puntaje GPA.
+# 9. Escoge una de las variables independientes de tu modelo final y grafica los valores predichos de y a partir de determinados valores de x (escogidos por ti). Las demás déjalas constantes (en la media o en la moda).
+
+# 10. Extra 1: Supongamos hay una teoría detrás que establece que hay un efecto del género en el puntaje GPA.
 
 modelo_base <- lm(co ~ ge, data=student.survey)
 summary(modelo_base)
@@ -105,7 +107,7 @@ modelo_BIC_explicativo <-  stepAIC(
 #co ~ ge + hi
 summary(modelo_BIC_explicativo)
 
-# 10. Extra 2: Supongamos que todas las variables de la base de datos tienen un poder predictivo.
+# 11. Extra 2: Supongamos que todas las variables de la base de datos tienen un poder predictivo.
 
 # Estimamos un modelo de regresión con todas las variables.
 modelo_complejo <- lm(co ~.,data=student.survey.modif)
@@ -152,5 +154,5 @@ summary(modelo_AIC)
 #El modelo final es:
   #co ~ ge + hi + dr + pa + pi + re
 
-# 11. Extra 3. Haz lo mismo que el punto anterior pero incluyendo todas las posibles interacciones de tus variables. Tip: Se pone la fórmula de las variables entre ()^2 para generar todas sus interacciones. 
+
 
