@@ -49,8 +49,7 @@ data(student.survey)
 
 # 5. Estima un modelo de regresión lineal múltiple para explicar el College GPA a partir de: género en interacción con la edad, high school gpa, distancia de la casa al campus, horas de televisión, ideología política, asistencia a servicios religiosos. Guárdalo como modelo 4.
 
-# 6. Interpreta los 4 modelos anteriores en términos de: significancia de los coeficientes, significancia global del modelo, R cuadrada e intervalos de confianza. Escoge uno de los cuatro modelos.
-
+# 6. Interpreta los 4 modelos anteriores en términos de: efecto, significancia de los coeficientes, significancia global del modelo, R cuadrada. Escoge uno de los cuatro modelos.
 # 7. Del modelo escogido: comprueba los supuestos de normalidad de los errores, homocedasticidad y multicolinealidad.
 
 # 8. Del modelo escogido, analiza los datos atípicos. Usa cooks.distance().
