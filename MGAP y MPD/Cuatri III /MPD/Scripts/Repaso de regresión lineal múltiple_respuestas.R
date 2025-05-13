@@ -46,8 +46,8 @@ summary(modelo1)
 
 #Ecuación del modelo 
 # co=2.75+0.21hi
-
-#En promedio, por cada punto adicional en el GPA de la secundaria, aumenta el GPA de la universidad en 0.21 puntos. Dado que el pvalor es menor al nivel de significancia, se rechaza la hipótesis de que b1 = 0, por lo que, con un nivel de confianza del 95%, podemos afirmar que existe un efecto. La R cuadrada es apenas 7% es decir la variable independiente explica en 7% de la variabilidad de la variable dependiente.
+#En promedio, por cada punto adicional en el GPA de la secundaria, aumenta el GPA de la universidad en 0.21 puntos. Dado que el pvalor es menor al nivel de significancia, se rechaza la hipótesis de que b1 = 0, por lo que, con un nivel de confianza del 95%, podemos afirmar que existe un efecto. 
+#La R cuadrada es apenas 7% es decir la variable independiente explica en 7% de la variabilidad de la variable dependiente.
 
 # 2. Estima un modelo de regresión lineal múltiple para explicar el College GPA a partir de: edad, high school gpa, distancia de la casa al campus, horas de televisión. Guárdalo como modelo 2.
 modelo2 <- lm(co~hi+ag+dh+tv, data=student.survey)
@@ -58,7 +58,7 @@ summary(modelo2)
 #GPA de secundaria (hi): En promedio, por cada punto adicional en el GPA de secundaria, el GPA universitario aumenta en promedio 0.228 puntos, manteniendo constantes las demás variables. Este efecto es estadísticamente significativo (p-valor = 0.0349 < 0.05).
 #Las demás variables no son significativas.
 
-#R² = 0.08121: Las variables independientes explican apenas el 8.12% de la variabilidad del GPA universitario.
+#R² = 0.08121: Las variables independientes explican el 8.12% de la variabilidad del GPA universitario.
 #F-estadístico = 1.215 (p-valor = 0.3149): El modelo como conjunto no es estadísticamente significativo, ya que el p-valor > 0.05.
 
 # 3. De las variables categóricas de género, ideología política y asistencia a servicios religiosos, revisa cuál es la categoría que tiene más observaciones y usa esa como categoría base. Si ya estaba así, lo puedes omitir. Tip, usa factor=() y modifica los levels=c()
@@ -109,6 +109,7 @@ summary(modelo4)
 #F-estadístico = 1.972 (p-valor = 0.04096): El modelo como conjunto es estadísticamente significativo al nivel de significancia de 0.05, aunque el p-valor está bastante cerca del umbral crítico. 
 
 # 6. Interpreta los 4 modelos anteriores en términos de: efecto, significancia de los coeficientes, significancia global del modelo, R cuadrada. Escoge uno de los cuatro modelos.
+# (Interpretados arriba).
 
 # 7. Del modelo escogido: comprueba los supuestos de normalidad de los errores, homocedasticidad y multicolinealidad.
 
@@ -117,8 +118,6 @@ summary(modelo4)
 student.survey$res <- residuals(modelo3)
 
 # Crear el QQ-plot
-#El QQ plot (o gráfico cuantílico-cuantílico) es una herramienta gráfica para evaluar si los residuos de un modelo (como una regresión) siguen una distribución normal.
-#En el eje x están los cuantiles teóricos de una distribución normal
 p1 <- ggplot(student.survey, aes(sample = res)) +
   stat_qq() + #Dibuja los puntos comparando los cuantiles teóricos con observados.
   stat_qq_line() + #Línea de referencia
@@ -140,10 +139,7 @@ p3 <- ggplot(student.survey, aes(y = res)) +
   geom_boxplot(fill = "gray") +
   labs(title = "Boxplot of res",
        y = "res") +
-  theme_minimal() +
-  theme(axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank())
+  theme_minimal() 
 
 # Combinar los gráficos con patchwork
 p1 | p2 | p3
@@ -161,40 +157,30 @@ student.survey$res_estandarizados <- rstandard(modelo3)
 
 
 p1 <- ggplot(data = student.survey, aes(x = pred, y = res)) +
-  geom_point(shape = 1) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
-  geom_hline(yintercept = c(-2, -1, 1, 2), linetype = "dashed", color = "gray") +
+  geom_point() +
+  geom_hline(yintercept = c(-2, -1, 0, 1, 2), linetype = "dashed", color = "gray") +
   labs(
     x = "Y pronosticados(ajustados)",
-    y = "Errores estimados"
+    y = "Errores"
   ) +
   ylim(-3, 3) +
-  theme_minimal() +
-  theme(
-    panel.grid.minor = element_blank(),
-    panel.border = element_rect(fill = NA, color = "black")
-  )
-
+  theme_minimal() 
 
 p2 <- ggplot(data = student.survey, aes(x = pred, y = res_estandarizados)) +
-  geom_point(shape = 1) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
-  geom_hline(yintercept = c(-2, -1, 1, 2), linetype = "dashed", color = "gray") +
+  geom_point() +
+  geom_hline(yintercept = c(-2, -1, 0, 1, 2), linetype = "dashed", color = "gray") +
   labs(
     x = "Y pronosticados(ajustados)",
-    y = "Errores estimados estandarizados"
+    y = "Errores estandarizados"
   ) +
   ylim(-3, 3) +
-  theme_minimal() +
-  theme(
-    panel.grid.minor = element_blank(),
-    panel.border = element_rect(fill = NA, color = "black")
-  )
+  theme_minimal() 
+
 
 # Combinar los gráficos
 p1 + p2 + 
   plot_annotation(
-    title = "Homocedasticidad: Varianza constante de los errores. Medios gráficos",
+    title = "Verificación supuesto homocedasticidad: Varianza constante de los errores",
     theme = theme(plot.title = element_text(size = 14))
   )
 
@@ -223,38 +209,3 @@ dist_cook <- cooks.distance(modelo3)
 # Identificar observaciones influyentes
 obs_influyentes <- which(dist_cook > umbral_cook)
 
-# 9. Escoge una de las variables independientes de tu modelo final y grafica los valores predichos de y a partir de determinados valores de x (escogidos por ti).
-
-nuevos_datos <- data.frame(
-  hi = c(1, 2, 3, 4, 5),
-  ge = "f",  
-  ag = mean(student.survey$ag),  
-  dh = mean(student.survey$dh),  
-  tv = mean(student.survey$tv), 
-  pi = "liberal", 
-  re = "occasionally" 
-)
-
-#Con la función predict voy a ver los valores de mi variable dependiente, dados ciertos valores de mi variable independiente
-predicciones <- predict(modelo3, 
-        newdata = nuevos_datos, 
-        interval = "confidence", 
-        level=0.95)
-
-resultados <- cbind(nuevos_datos["hi"], predicciones)
-
-
-#nuevos_datos["hi"] selecciona solo la columna hi del data frame,
-#cbind(...) combina esa columna con el resultado de predict(),
-#El objeto final resultados contiene:
-#La variable independiente hi,
-#La predicción de la variable dependiente,
-#Los límites inferior y superior del intervalo de confianza.
-
-ggplot(resultados, aes(x = hi, y = fit)) +
-  geom_line() +
-  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2) +  # Intervalo de confianza
-  labs(title = "Valores predichos de la variable dependiente según hi, manteniendo las demás constantes",
-       x = "Valores de hi",
-       y = "Valores predichos de co") +
-  theme_minimal()
