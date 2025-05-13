@@ -117,8 +117,6 @@ summary(modelo4)
 student.survey$res <- residuals(modelo3)
 
 # Crear el QQ-plot
-#El QQ plot (o gráfico cuantílico-cuantílico) es una herramienta gráfica para evaluar si los residuos de un modelo (como una regresión) siguen una distribución normal.
-#En el eje x están los cuantiles teóricos de una distribución normal
 p1 <- ggplot(student.survey, aes(sample = res)) +
   stat_qq() + #Dibuja los puntos comparando los cuantiles teóricos con observados.
   stat_qq_line() + #Línea de referencia
@@ -157,10 +155,10 @@ ks.test(student.survey$res, "pnorm", mean = mean(student.survey$res), sd = sd(st
 #Creamos valores predichos
 student.survey$pred <- predict(modelo3)
 #Creamos errores estimados estandarizados
-student.survey$res_estandarizados <- rstandard(modelo3)
+student.survey$res_sd <- rstandard(modelo3)
 
 
-p1 <- ggplot(data = student.survey, aes(x = pred, y = res)) +
+p4 <- ggplot(data = student.survey, aes(x = pred, y = res)) +
   geom_point(shape = 1) +
   geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
   geom_hline(yintercept = c(-2, -1, 1, 2), linetype = "dashed", color = "gray") +
@@ -176,7 +174,7 @@ p1 <- ggplot(data = student.survey, aes(x = pred, y = res)) +
   )
 
 
-p2 <- ggplot(data = student.survey, aes(x = pred, y = res_estandarizados)) +
+p5 <- ggplot(data = student.survey, aes(x = pred, y = res_sd)) +
   geom_point(shape = 1) +
   geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
   geom_hline(yintercept = c(-2, -1, 1, 2), linetype = "dashed", color = "gray") +
@@ -192,9 +190,9 @@ p2 <- ggplot(data = student.survey, aes(x = pred, y = res_estandarizados)) +
   )
 
 # Combinar los gráficos
-p1 + p2 + 
+p4 + p5 + 
   plot_annotation(
-    title = "Homocedasticidad: Varianza constante de los errores. Medios gráficos",
+    title = "Supuesto homocedasticidad: Varianza constante de los errores",
     theme = theme(plot.title = element_text(size = 14))
   )
 
@@ -246,11 +244,8 @@ resultados <- cbind(nuevos_datos["hi"], predicciones)
 
 #nuevos_datos["hi"] selecciona solo la columna hi del data frame,
 #cbind(...) combina esa columna con el resultado de predict(),
-#El objeto final resultados contiene:
-#La variable independiente hi,
-#La predicción de la variable dependiente,
-#Los límites inferior y superior del intervalo de confianza.
 
+dev.off()
 ggplot(resultados, aes(x = hi, y = fit)) +
   geom_line() +
   geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2) +  # Intervalo de confianza
