@@ -1,6 +1,6 @@
 # =========================================================
 # Respuestas: Repaso de regresión lineal múltiple
-# Fecha: 12/05/2024
+# Fecha: 13/05/2024
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
 
