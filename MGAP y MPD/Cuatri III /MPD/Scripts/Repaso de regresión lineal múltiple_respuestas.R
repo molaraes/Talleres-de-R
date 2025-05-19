@@ -209,3 +209,51 @@ dist_cook <- cooks.distance(modelo3)
 # Identificar observaciones influyentes
 obs_influyentes <- which(dist_cook > umbral_cook)
 
+
+student.survey %>% 
+  dplyr::filter(subj!=11 &
+                  subj!=45 &
+                  subj!=47 &
+                  subj!=56) -> base_modif
+
+modelo3_1 <- lm(co~ge+ag+hi+dh+tv+pi+re, 
+                data=base_modif)
+summary(modelo3)
+summary(modelo3_1)
+
+# 9. Escoge una de las variables independientes de tu modelo final y grafica los valores predichos de y a partir de determinados valores de x (escogidos por ti).
+
+nuevos_datos <- data.frame(
+  hi = c(1, 2, 3, 4, 5),
+  ge = "f",  
+  ag = mean(student.survey$ag),  
+  dh = mean(student.survey$dh),  
+  tv = mean(student.survey$tv), 
+  pi = "liberal", 
+  re = "occasionally" 
+)
+
+#Con la función predict voy a ver los valores de mi variable dependiente, dados ciertos valores de mi variable independiente
+predicciones <- predict(modelo3, 
+        newdata = nuevos_datos, 
+        interval = "confidence", 
+        level=0.95)
+
+resultados <- cbind(nuevos_datos["hi"], predicciones)
+
+
+#nuevos_datos["hi"] selecciona solo la columna hi del data frame,
+#cbind(...) combina esa columna con el resultado de predict(),
+#El objeto final resultados contiene:
+#La variable independiente hi,
+#La predicción de la variable dependiente,
+#Los límites inferior y superior del intervalo de confianza.
+resultados %>% 
+ggplot(aes(x = hi, y = fit)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2) +  # Intervalo de confianza
+  labs(title = "Valores predichos de la variable dependiente según hi\nmanteniendo las demás constantes",
+       x = "Valores de hi",
+       y = "Valores predichos de co") +
+  theme_minimal()
+
