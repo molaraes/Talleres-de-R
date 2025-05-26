@@ -61,7 +61,6 @@ modelo_simple <- glm(formula=disc~EDAD,
 summary(modelo_simple)
 
 #¿Cuál es la probabilidad de que una mujer de edad promedio se haya sentido discriminada?
-#https://www.monografias.com/docs113/regresion-aplicada-logistica/regresion-aplicada-logistica
 
 # Coeficientes del modelo
 b0 <- -1.150106
@@ -81,7 +80,6 @@ datos_predecir <- data.frame(EDAD = c(18,28,38,48,58))
 
 predict(modelo_simple, datos_predecir, type="response" )
 
-#Paquete para generar los intervalos de predicción
 #Intervalos de confianza de los parámetros
 confint(modelo_simple)
 
@@ -90,7 +88,6 @@ ciTools::add_ci(datos_predecir, modelo_simple, alpha = 0.05)
 
 #Graficamos
 cplot(modelo_simple, "EDAD")
-
 
 # Regresión logística con más variables independientes --------------------
 
@@ -142,37 +139,24 @@ base <- base %>%
 
 table(base$nivel)
 
-#Modelo logístico binomial ####
-#Modelo
+#Modelo con más variables ####
 modelo2 <- glm(disc ~ EDAD.x + afro + nivel, data = base, 
                family = binomial(link = logit))
 summary(modelo2)
-
-#Los coeficientes representan el cambio en el log-odds (logaritmo de las probabilidades) por cada unidad de cambio en la variable.
-
-#Bondad del ajuste
-#Null deviance: 25,610 (modelo sin variables predictoras)
-#Residual deviance: 24,490 (modelo con variables)
-#La reducción sugiere que el modelo explica parte de la variabilidad
-#AIC: 24,502 (criterio de información para comparar modelos)
 
 #Tabla
 resultados <- as.data.frame(tidy(modelo1, conf.int = TRUE))
 
 #Para los odds ratio
-#Mide el cambio en las probabilidades relativas (odds)
-#Compara: P(evento)/P(no evento)
 exp(coef(modelo2))
 tbl_regression(modelo2, exp = TRUE)
 
-#Para los efectos marginales: efecto marginal promedio de la variable edad sobre la probabilidad de discriminación.
-
+#Para los efectos marginales: 
 marginaleffects::avg_slopes(modelo2, variables = "EDAD.x")
+
 #Por cada año adicional de edad, la probabilidad de reportar discriminación aumenta en promedio 0.201 puntos porcentuales
 marginaleffects::avg_slopes(modelo1, variables = "afro")
 marginaleffects::avg_slopes(modelo1, variables = "nivel")
-
-# El comando avg_slopes() calcula el cambio promedio en la probabilidad predicha para un cambio de una unidad en la variable edad, manteniendo todas las demás variables constantes.
 
 #Para las probabilidades predichas
 predict1 <- ggpredict(modelo2, terms = c("EDAD.x[18:96 by = 10]", "nivel", "afro"))
