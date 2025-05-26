@@ -149,6 +149,12 @@ resultados <- as.data.frame(tidy(modelo1, conf.int = TRUE))
 
 #Para los odds ratio
 exp(coef(modelo2))
+#Conforme aumente la edad, las probabilidades de sufrir discriminación disminuyen 2.73%
+#Las personas que NO se consideran afrodescendientes tienen 29.07% menos probabilidades de sufrir discriminación comparado con quienes SÍ se consideran afrodescendientes.
+#Las personas con educación básica tienen 33.24% menos probabilidades de sufrir discriminación comparado con personas sin educación
+#Las personas con educación media superior tienen 1.17% menos probabilidades de sufrir discriminación comparado con personas sin educación
+#Las personas con educación superior tienen 41.56% MÁS probabilidades de sufrir discriminación comparado con personas sin educación
+
 tbl_regression(modelo2, exp = TRUE)
 
 #Para los efectos marginales: 
