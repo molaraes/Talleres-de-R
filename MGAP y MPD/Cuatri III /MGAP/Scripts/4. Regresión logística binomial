@@ -145,7 +145,7 @@ modelo2 <- glm(disc ~ EDAD.x + afro + nivel, data = base,
 summary(modelo2)
 
 #Tabla
-resultados <- as.data.frame(tidy(modelo1, conf.int = TRUE))
+resultados <- as.data.frame(tidy(modelo2, conf.int = TRUE))
 
 #Para los odds ratio
 exp(coef(modelo2))
@@ -161,8 +161,8 @@ tbl_regression(modelo2, exp = TRUE)
 marginaleffects::avg_slopes(modelo2, variables = "EDAD.x")
 
 #Por cada año adicional de edad, la probabilidad de reportar discriminación aumenta en promedio 0.201 puntos porcentuales
-marginaleffects::avg_slopes(modelo1, variables = "afro")
-marginaleffects::avg_slopes(modelo1, variables = "nivel")
+marginaleffects::avg_slopes(modelo2, variables = "afro")
+marginaleffects::avg_slopes(modelo2, variables = "nivel")
 
 #Para las probabilidades predichas
 predict1 <- ggpredict(modelo2, terms = c("EDAD.x[18:96 by = 10]", "nivel", "afro"))
