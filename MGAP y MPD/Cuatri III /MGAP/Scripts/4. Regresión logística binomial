@@ -160,7 +160,7 @@ tbl_regression(modelo2, exp = TRUE)
 #Para los efectos marginales: 
 marginaleffects::avg_slopes(modelo2, variables = "EDAD.x")
 
-#Por cada año adicional de edad, la probabilidad de reportar discriminación aumenta en promedio 0.201 puntos porcentuales
+#Por cada año adicional de edad, la probabilidad de reportar discriminación disminuye en promedio 0.201 puntos porcentuales
 marginaleffects::avg_slopes(modelo2, variables = "afro")
 marginaleffects::avg_slopes(modelo2, variables = "nivel")
 
@@ -203,30 +203,6 @@ g <- g+
         plot.caption= element_text(hjust=0.5))
 
 g
-
-#Graficar con ggeffects_lomismo
-g <- ggpredict(modelo2, terms = c("EDAD.x[18:96 by = 10]", "nivel", "afro")) %>% 
-  plot(connect_lines = TRUE)
-
-g <- g +
-  scale_color_manual(
-    values = c(Ninguno = "#BCD6DB",
-               Básico = "#6D86A1",
-               `Medio superior` = "#8A5DAA",
-               Superior = "#4D004B")) +
-  labs(title="Probabilidad de sentirse discriminada \n según edad, escolaridad y afrodescendencia",
-       x="Edad",
-       y= "Probabilidad",
-       colour= "Escolaridad",
-       caption= "Elaboración propia con base en ENADIS 2022")+
-  theme_minimal()+
-  theme(plot.title=element_text(size=14, hjust=0.5),
-        axis.title.x = element_text(size=11),
-        axis.title.y = element_text(size=11),
-        plot.caption= element_text(hjust=0.5))
-g
-
-
 
 # Con término de interacción ----------------------------------------------
 modelo3 <- glm(disc ~ EDAD.x*afro + nivel , data = base, 
