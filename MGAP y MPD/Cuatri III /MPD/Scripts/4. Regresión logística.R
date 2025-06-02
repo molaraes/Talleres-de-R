@@ -160,7 +160,7 @@ tbl_regression(modelo2, exp = TRUE)
 #Para los efectos marginales: 
 marginaleffects::avg_slopes(modelo2, variables = "EDAD.x")
 
-#Por cada año adicional de edad, la probabilidad de reportar discriminación aumenta en promedio 0.201 puntos porcentuales
+#Por cada año adicional de edad, la probabilidad de reportar discriminación disminuye en promedio 0.201 puntos porcentuales
 marginaleffects::avg_slopes(modelo1, variables = "afro")
 marginaleffects::avg_slopes(modelo1, variables = "nivel")
 
