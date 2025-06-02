@@ -4,12 +4,6 @@
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
 
-#Modelos explicativos:
-#"¿Cómo afecta la edad a la probabilidad de sufrir discriminación?"
-#Problema de clasificación: 
-#"¿Podemos predecir correctamente quién sufrirá discriminación basándonos en edad, educación, etc.?"
-
-
 # Previo ------------------------------------------------------------------
 
 pacman::p_load("tidyverse", "caret", "forcats", "janitor", "MASS")
@@ -37,8 +31,6 @@ base$gender <- factor(base$gender, levels = c("Male", "Female"))
 table(base$city)
 #Es una variable categórica con más de 10 niveles
 #Vamos a reagrupar niveles: aquellas que tengan menos del 4% las ponemos en "otras"
-#El % se puede definir por ensayo y error para tener menos de 10 grupos
-#Usamos la función fct_lump_prop() del paquete forcats para reducir la alta dimensionalidad de la variable City 
 
 base <- base %>%
   mutate(city_reagrupada = fct_lump_prop(city, prop = 0.04, other_level = "Otros"))
@@ -48,15 +40,11 @@ table(base$city_reagrupada)
 
 base$city_reagrupada <- factor(base$city_reagrupada,levels = c("Otros","Hyderabad", "Kalyan", "Lucknow", "Srinagar", "Thane", "Vasai-Virar"))
 
-
-#Observación --> Se pueden agrupar por otras consideraciones dependiendo de las características de las variables. Por ejemplo --> City se pudo haber reagrupado por cercanía territorial. O por alguna otra consideración. Es importante describir el criterio empleado para agrupar
-
 #Variable Profession:
 table(base$profession)
 
 #Está muy cargado el nivel "student" de la variable profession 
-#Aunque reagrupemos, el nivel "Otros" tendrá menos del 1%. 
-#Es mejor quitarla. 
+#Aunque reagrupemos, el nivel "Otros" tendrá menos del 1%, es mejor quitarla. 
 
 base <- base %>% dplyr::select(-profession)
 
@@ -73,13 +61,13 @@ base$sleep_duration <- factor(base$sleep_duration,
 
 #Variable Dietary.Habits: 
 table(base$dietary_habits)
+
 #Es una variable ordinal:
 base$dietary_habits <- factor(base$dietary_habits,
                                          levels = c("Unhealthy",
                                                     "Moderate", 
                                                     "Healthy",
                                                     "Others"))
-
 
 #Variable Degree: 
 table(base$degree)
@@ -114,7 +102,7 @@ base$family_history_of_mental_illness <- factor(base$family_history_of_mental_il
                                                            levels = c("No",
                                                                       "Yes"))
 
-#Quitamos variables city y degree
+#Quitamos variables city y degree originales
 base <- base %>% 
   dplyr::select(-city, -degree)
 
@@ -138,12 +126,6 @@ summary(modelo_aic)
 
 # Dividimos los datos -----------------------------------------------------
 
-#Entrenamiento del modelo: El conjunto de entrenamiento (generalmente 70-80% de los datos) se utiliza para que el modelo de regresión logística aprenda los patrones y relaciones entre las variables independientes y la variable objetivo.
-
-#Evaluación independiente: El conjunto de prueba (20-30% restante) permite evaluar el rendimiento del modelo en datos que no ha visto durante el entrenamiento, proporcionando una estimación más realista de su capacidad de generalización.
-
-#Prevención del sobreajuste: Esta división ayuda a detectar si el modelo está memorizando los datos de entrenamiento (sobreajuste) en lugar de aprender patrones generales.
-
 #1. Fijamos número semilla
 set.seed(123456) 
 
@@ -152,10 +134,6 @@ indice <- createDataPartition(y=factor(base$depression), p = 0.7, list = FALSE)
 # 70% entrenamiento
 
 indice
-
-#El índice que genera createDataPartition() es un vector de posiciones (filas) que indica cuáles observaciones del conjunto original base deben ir al conjunto de entrenamiento.
-
-#List=FALSE nos devuelve un vector de índices.
 
 #3. Dividimos los datos
 entrenamiento <- base[indice, ]
@@ -181,7 +159,6 @@ modelo_train <- glm(formula=depression~age+academic_pressure+cgpa+study_satisfac
 # Vemos resumen del modelo (opcional)
 summary(modelo_train)
 
-
 #6. Calculamos probabilidades en el conjunto de prueba
 probabilidades <- predict(modelo_train, newdata = prueba, type = "response")
 probabilidades
@@ -191,9 +168,6 @@ predicciones <- ifelse(probabilidades >= 0.5, 1, 0)
 predicciones
 
 #8. Creamos la matriz de confusión
-# Es una tabla que muestra la cantidad de predicciones correctas e incorrectas organizadas por clase, comparando las predicciones del modelo con los valores reales.
-
-# La función table permite construir tablas de contingencia
 matriz_confusion <- table(Observación = prueba$depression, Predicción = predicciones)
 
 # Mostrar la matriz de confusión
@@ -204,6 +178,7 @@ print(matriz_confusion)
 #Exactitud (accuracy): proporción total de predicciones correctas
 exactitud <- sum(diag(matriz_confusion)) / sum(matriz_confusion)  
 exactitud
+
 #Error
 error <- 1 - exactitud  
 error
