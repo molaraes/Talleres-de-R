@@ -7,7 +7,7 @@
 
 # Previo ------------------------------------------------------------------
 
-pacman::p_load("tidyverse", "ggeffects", "broom", "marginaleffects", "RColorBrewer", "margins", "ResourceSelection")
+pacman::p_load("tidyverse", "ggeffects", "broom", "marginaleffects", "RColorBrewer", "margins", "ResourceSelection", "pscl")
 
 #Base de datos####
 load("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/Taller estadística/Estadística 3/MPD/Datos/bd_enadis_2022.RData")
@@ -150,37 +150,31 @@ summary(modelo_multiple)
 #Los coeficientes representan el cambio en el log-odds (logaritmo de las probabilidades) por cada unidad de cambio en la variable.
 
 #Bondad del ajuste
+pR2(modelo_multiple)
 
-#La null deviance mide qué tan bien predice un modelo "nulo" o vacío - es decir, un modelo que solo incluye el intercepto (constante) sin ninguna variable predictora. Este modelo simplemente predice la probabilidad promedio de la variable dependiente para todas las observaciones.
-#Se calcula como: -2 × log-likelihood del modelo nulo
+#La null deviance mide qué tan bien predice un modelo "nulo" es decir, un modelo que solo incluye el intercepto (constante) 
 #La del modelo simple es 25,808 y la del modelo múltiple es: 25,610  
 
-#La residual deviance (o deviance residual) mide qué tan bien predice tu modelo completo con todas las variables predictoras incluidas. Representa la diferencia entre las probabilidades predichas por tu modelo y los valores reales observados.
-#Se calcula como: -2 × log-likelihood del modelo completo
+#La residual deviance (o deviance residual) mide qué tan bien predice tu modelo completo con todas las variables predictoras incluidas. 
 #La del modelo simple es 24,992 y la del modelo múltiple es: 24,490 
 
-#La reducción entre el modelo simple y múltiple sugiere que el modelo explica parte de la variabilidad
-#Compararlas nos indica cuánto mejora el modelo al incluir variables predictoras
 #Si la diferencia entre la null y residual es alta, el modelo múltiple mejora la predicción
 
 #AIC (modelo simple): 24,996 
 #AIC (modelo múltiple): 24,502 
 
 #Prueba Hosmer
-#La prueba de Hosmer-Lemeshow (a veces llamada simplemente "prueba de Hosmer") es una herramienta estadística utilizada para evaluar el ajuste de un modelo de regresión logística. Específicamente, permite determinar si las probabilidades predichas por el modelo se ajustan bien a los datos observados.
-
-#Evalúa si las diferencias entre los valores observados y los valores esperados (predichos por el modelo) son estadísticamente significativas. Si el modelo tiene un buen ajuste, estas diferencias deben ser pequeñas y atribuibles al azar.
-
-#Se ordenan datos de probabilidades predichas de menor a mayor. Se agrupan en deciles. Para cada grupo se comparan frecuencias observadas y frecuencias esperadas. Se calcula chi-cuadrado.
+#La prueba de Hosmer-Lemeshow la utilizamos para evaluar el ajuste de un modelo de regresión logística. 
+#ermite determinar si las probabilidades predichas por el modelo se ajustan bien a los datos observados.
 
 #Hipótesis nula (H₀): el modelo se ajusta bien a los datos (no hay diferencias significativas entre lo observado y lo predicho).
-
 #Hipótesis alternativa (H₁): el modelo no se ajusta bien a los datos.
 
+#Paso 1. Generamos predicciones del modelo
 # Predicciones del modelo
 pred <- predict(modelo_multiple, type = "response")
 
-# Prueba de Hosmer-Lemeshow con 10 grupos (por defecto)
+#Paso 2. Tomamos casos válidos
 # Obtenemos las observaciones usadas en el modelo
 obs_modelo <- as.numeric(names(fitted(modelo_multiple)))
 
@@ -190,6 +184,7 @@ datos_validos <- data.frame(
   p = pred
 )
 
+#Paso 3. Hacemos la prueba
 hoslem.test(datos_validos$y, datos_validos$p)
 
 #Tabla
