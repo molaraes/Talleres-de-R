@@ -4,18 +4,12 @@
 # Autora: Mónica Lara Escalante-FLACSO México
 # =========================================================
 
-#Modelos explicativos:
-#"¿Cómo afecta la edad a la probabilidad de sufrir discriminación?"
-#Problema de clasificación: 
-#"¿Podemos predecir correctamente quién sufrirá discriminación basándonos en edad, educación, etc.?"
-
-
 # Previo ------------------------------------------------------------------
 
 pacman::p_load("tidyverse", "caret", "forcats", "janitor", "MASS", "pROC")
 
 #Abrimos base de datos
-setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/Taller estadística/Estadística 3/MPD/Datos")
+setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/Taller estadística/Estadística 3/MGAP/Datos")
 
 base <- read_csv("Student Depression Dataset.csv") %>% 
   dplyr::select(-id)
@@ -41,8 +35,6 @@ base$gender <- factor(base$gender, levels = c("Male", "Female"))
 table(base$city)
 #Es una variable categórica con más de 10 niveles
 #Vamos a reagrupar niveles: aquellas que tengan menos del 4% las ponemos en "otras"
-#El % se puede definir por ensayo y error para tener menos de 10 grupos
-#Usamos la función fct_lump_prop() del paquete forcats para reducir la alta dimensionalidad de la variable City 
 
 base <- base %>%
   mutate(city_reagrupada = fct_lump_prop(city, prop = 0.04, other_level = "Otros"))
@@ -52,14 +44,10 @@ table(base$city_reagrupada)
 
 base$city_reagrupada <- factor(base$city_reagrupada,levels = c("Otros","Hyderabad", "Kalyan", "Lucknow", "Srinagar", "Thane", "Vasai-Virar"))
 
-
-#Observación --> Se pueden agrupar por otras consideraciones dependiendo de las características de las variables. Por ejemplo --> City se pudo haber reagrupado por cercanía territorial. O por alguna otra consideración. Es importante describir el criterio empleado para agrupar
-
 #Variable Profession:
 table(base$profession)
 
 #Está muy cargado el nivel "student" de la variable profession 
-#Aunque reagrupemos, el nivel "Otros" tendrá menos del 1%. 
 #Es mejor quitarla. 
 
 base <- base %>% dplyr::select(-profession)
@@ -77,6 +65,7 @@ base$sleep_duration <- factor(base$sleep_duration,
 
 #Variable Dietary.Habits: 
 table(base$dietary_habits)
+
 #Es una variable ordinal:
 base$dietary_habits <- factor(base$dietary_habits,
                                          levels = c("Unhealthy",
@@ -130,7 +119,7 @@ modelo_complejo <- glm(formula=depression~.,
 
 summary(modelo_complejo)
 
-# Buscar con el criterio de AIC (pondera modelos predictivos)
+# Buscar con el criterio de AIC 
 modelo_aic <- stepAIC(
   object = modelo_complejo,      
   direction = "backward",   
@@ -143,7 +132,6 @@ summary(modelo_aic)
 # Tabla clasificación -----------------------------------------------------
 
 # PASO 1: Obtener las probabilidades predichas
-# Las probabilidades están entre 0 y 1
 probabilidades_predichas <- predict(modelo_aic, type = "response")
 
 # PASO 2: Convertir probabilidades a clasificaciones binarias usando umbral 0.5
@@ -159,7 +147,7 @@ valores_observados <- base$depression
 valores_observados <- factor(valores_observados)
 clasificaciones_predichas <- factor(clasificaciones_predichas)
 
-# Crear matriz de confusión detallada
+# Crear matriz de confusión 
 matriz_confusion <- confusionMatrix(clasificaciones_predichas, 
                                     valores_observados, 
                                     positive = "1")  
@@ -183,11 +171,8 @@ matriz_confusion$byClass["Sensitivity"]
 matriz_confusion$byClass["Specificity"]
 
 # Curva ROC ---------------------------------------------------------------
-#La curva ROC (Receiver Operating Characteristic) es una herramienta gráfica fundamental para evaluar el rendimiento de un modelo de regresión logística, especialmente útil para problemas de clasificación binaria.
-
-#La curva ROC grafica la relación entre:
-#Eje Y: Sensibilidad (Tasa de Verdaderos Positivos) = TP / (TP + FN)
-#Eje X: 1 - Especificidad (Tasa de Falsos Positivos) = FP / (FP + TN)
+#La curva ROC (Receiver Operating Characteristic) sirve para evaluar el rendimiento de un modelo de regresión logística
+#La curva ROC grafica la relación entre la sensibilidad y la especificidad.
 
 #¿Cómo se construye?
 #El modelo genera probabilidades para cada observación (0 a 1)
@@ -199,16 +184,7 @@ matriz_confusion$byClass["Specificity"]
 #Curva ideal: Se acerca a la esquina superior izquierda (sensibilidad alta, especificidad alta)
 #Línea diagonal: Representa un modelo aleatorio sin poder predictivo
 
-#Área bajo la curva (AUC):
-#AUC = 1.0: Modelo perfecto
-#AUC = 0.9-1.0: Excelente
-#AUC = 0.8-0.9: Bueno
-#AUC = 0.7-0.8: Aceptable
-#AUC = 0.6-0.7: Pobre
-#AUC = 0.5: Sin valor predictivo (equivale a lanzar una moneda)
-#AUC < 0.5: Peor que aleatorio
-
-# Crear la curva ROC usando las probabilidades del conjunto de prueba
+# Crear la curva ROC 
 roc_curve <- roc(base$depression, probabilidades_predichas)
 
 # Graficar la curva ROC
@@ -227,17 +203,12 @@ abline(a = 0, b = 1, lty = 2, col = "red", lwd = 2)
 auc_value <- auc(roc_curve)
 #El modelo tiene una probabilidad del 92.2% de clasificar correctamente a una persona con depresión como "positiva" y a una persona sin depresión como "negativa" cuando se comparan pares aleatorios.
 
-#Forma de la curva: Se acerca mucho a la esquina superior izquierda, lo que indica:
-
-#Alta sensibilidad: Detecta bien los casos de depresión
-#Alta especificidad: Evita bien los falsos positivos
-
-#Distancia de la línea diagonal roja: Tu curva está muy separada de la línea de referencia (clasificador aleatorio), confirmando que tu modelo es mucho mejor que una predicción al azar.
+#Forma de la curva: Se acerca mucho a la esquina superior izquierda
 
 
 # EXTRA: DATOS DE ENTRENAMIENTO Y PRUEBA -----------------------------------------------------
 
-#Entrenamiento del modelo: El conjunto de entrenamiento (generalmente 70-80% de los datos) se utiliza para que el modelo de regresión logística aprenda los patrones y relaciones entre las variables independientes y la variable objetivo.
+#Entrenamiento del modelo: El conjunto de entrenamiento (generalmente 70-80% de los datos) se utiliza para que el modelo de regresión logística aprenda los patrones y relaciones entre las variables independientes y la variable dependiente.
 
 #Evaluación independiente: El conjunto de prueba (20-30% restante) permite evaluar el rendimiento del modelo en datos que no ha visto durante el entrenamiento, proporcionando una estimación más realista de su capacidad de generalización.
 
@@ -251,10 +222,6 @@ indice <- createDataPartition(y=factor(base$depression), p = 0.7, list = FALSE)
 # 70% entrenamiento
 
 indice
-
-#El índice que genera createDataPartition() es un vector de posiciones (filas) que indica cuáles observaciones del conjunto original base deben ir al conjunto de entrenamiento.
-
-#List=FALSE nos devuelve un vector de índices.
 
 #3. Dividimos los datos
 entrenamiento <- base[indice, ]
@@ -290,8 +257,6 @@ predicciones <- ifelse(probabilidades >= 0.5, 1, 0)
 predicciones
 
 #8. Creamos la matriz de confusión
-# Es una tabla que muestra la cantidad de predicciones correctas e incorrectas organizadas por clase, comparando las predicciones del modelo con los valores reales.
-
 matriz_caret <- confusionMatrix(as.factor(predicciones), # Predicciones
                                 as.factor(prueba$depression), # Valores reales
                                 positive = "1") # Evento de interés
