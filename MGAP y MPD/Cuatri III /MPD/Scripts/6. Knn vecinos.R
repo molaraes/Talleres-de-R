@@ -7,7 +7,7 @@
 
 # Previo ------------------------------------------------------------------
 
-pacman::p_load("tidyverse", "caret", "forcats", "janitor", "MASS", "class", "reshape2")
+pacman::p_load("tidyverse", "caret", "forcats", "janitor", "MASS", "class", "reshape2, "pROC")
 
 #Abrimos base de datos
 setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/Taller estadística/Estadística 3/MPD/Datos")
