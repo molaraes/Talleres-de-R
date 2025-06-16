@@ -139,6 +139,8 @@ View(base_knn_final)
 
 # Datos de entrenamiento y prueba -----------------------------------------
 
+#https://x.com/RosanaFerrero/status/1933766473664602477
+
 # Paso 1. Número semilla
 set.seed(123)
 
