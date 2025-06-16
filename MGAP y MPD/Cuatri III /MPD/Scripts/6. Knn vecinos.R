@@ -256,6 +256,46 @@ ggplot(cm_df, aes(x = Predicción, y = Realidad, fill = Frecuencia)) +
   scale_fill_gradient(low = "lightblue", high = "darkblue")
 
 
+# Curva de ROC ------------------------------------------------------------
+
+# Modelo final CON probabilidades
+knn_pred_final_prob <- knn(train = entrenamiento_sin_respuesta,
+                           test = prueba_sin_respuesta,
+                           cl = entrenamiento_knn$Depression,
+                           k = mejor_k,
+                           prob = TRUE)  
+
+# Extraemos las probabilidades
+probabilidades <- attr(knn_pred_final_prob, "prob")
+
+# Ajustamos direccionalidad (k-NN da prob de la clase predicha)
+# Si predijo "0", la prob de "1" es (1 - prob)
+prob_clase_1 <- ifelse(knn_pred_final_prob == "1", 
+                       probabilidades, 
+                       1 - probabilidades)
+
+
+# Creamos curva ROC
+roc_curve <- roc(prueba_knn$Depression, prob_clase_1)
+
+# Graficamos curva ROC
+plot(roc_curve, 
+     main = paste("Curva ROC - k-NN (k =", mejor_k, ")"),
+     col = "blue", 
+     lwd = 2)
+
+# Añadimos línea de referencia (modelo aleatorio)
+abline(a = 0, b = 1, lty = 2, col = "red")
+
+# Mostramos AUC
+auc_value <- auc(roc_curve)
+legend("bottomright", 
+       legend = paste("AUC =", round(auc_value, 3)),
+       col = "blue", 
+       lwd = 2)
+
+print(paste("AUC:", round(auc_value, 3)))
+
 
 # Práctica ----------------------------------------------------------------
 
