@@ -260,5 +260,6 @@ ggplot(cm_df, aes(x = Predicción, y = Realidad, fill = Frecuencia)) +
 # 1. Estima una regresión logística utilizando las mismas variables predictoras.
 # 2. Divide tus datos de tu regresión logística en entrenamiento y prueba.
 # 3. Elabora la matriz de confusión.
-# 4. Compara los resultados de la regresión logística con el knn. 
+# 4. Compara los resultados de la regresión logística con el knn que hicimos. 
+# 5. Replica el ejercicio con un mayor número de kvecinos.
 
