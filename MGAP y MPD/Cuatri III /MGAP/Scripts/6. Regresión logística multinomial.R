@@ -103,7 +103,7 @@ marginaleffects::avg_slopes(modelo, variables = "age")
 marginaleffects::avg_slopes(modelo, variables = "religion2")
 marginaleffects::avg_slopes(modelo, variables = "sex")
 marginaleffects::avg_slopes(modelo, variables = "race")
-marginaleffects::avg_slopes(modelo, variables = "obama")
+marginaleffects::avg_slopes(modelo, variables = "obama2")
 
 # El comando avg_slopes() calcula el cambio promedio en la probabilidad predicha para un cambio de una unidad en la variable independiente, manteniendo todas las demás variables constantes.
 
