@@ -113,7 +113,7 @@ predict1 <- predictions(modelo,
 newdata = datagrid(religion2 = unique(gss_sm$religion2),
                    obama2 = unique(gss_sm$obama2),
 sex = "Female",  # Valor fijo
-race = "White",
+race = "White", # Valor fijo
 age=49.15576)) # Valor fijo
 
 #Graficamos
