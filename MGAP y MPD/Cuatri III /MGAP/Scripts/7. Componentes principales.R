@@ -87,70 +87,41 @@ ggpairs(base_modif2[,2:18],axisLabels="show")+
 
 #El PCA nos permitirá definir a través de los componentes cuáles serán las dimensiones latentes, para luego avanzar a realizar un índice 
 
-#Primero, con el subconjunto de datos, generamos un PCA con el paquete de stats, que es uno de los paquetes básicos de R (ya viene instalado). Luego con el comando summary() podemos ver lo que el análisis nos da.
+#Primero, con el subconjunto de datos, generamos un PCA con el paquete de stats, que es uno de los paquetes básicos de R (ya viene instalado). 
+#Luego con el comando summary() podemos ver lo que el análisis nos da.
 
 pca <- princomp(base_num)
 summary(pca, loadings = T)
 
-# Desviaciones estándar de cada componente
-# Proporción de varianza 
-# Varianza acumulada
-# Los loadings (cargas o pesos) muestran cómo cada variable contribuye a cada componente: valores altos (positivos o negativos nos dice qué tanta influencia tiene la variable en cada componente)
-
 #También podemos ver cómo se construye cada componente con las variables que seleccionamos.
-
-#El eigen valor indica cuánto se estira o se contrae un vector propio cuando una matriz actúa sobre él (bajo una transformación lineal)
-#Si tienes una matriz A y un vector v, y al aplicar la transformación de A a v, el resultado es 2v (es decir, el vector v se duplica en longitud), entonces 2 es el eigenvalor correspondiente al eigenvector v. El eigenvector es un vector que después de ser transformado, sólo cambia de magnitud, no de dirección.
 
 eig_val <- get_eigenvalue(pca)
 eig_val
 
 #Te dicen qué tan importante es cada componente
-#Cuánta varianza explica cada uno
 #Son como el "tamaño" o "fuerza" de cada componente
-
-#Eigenvalue = "Esta torta pesa 2 kilos" (importancia)
-#Loading = "La receta: 3 huevos + 2 tazas harina + 1 taza azúcar" (composición)
-
 
 #Otra forma de analizar esta información es a través de gráficos. El siguiente comando nos da en su forma más simple, el porcentaje de varianza explicada por cada uno de los componentes.
 
 fviz_eig(pca, addlabels = T, ylim = c(0, 50))
 
 #Este es un Scree Plot (gráfico de sedimentación), ayuda a decidir cuántos componentes principales conservar.
-#Buscar donde la línea hace un "codo" o se vuelve más plana.
-#Despúes del componente tres, la caída es muy gradual.
 
 #Un pequeño cambio en el comando, también nos da un gráfico con los valores propios de cada uno de los componentes:
 fviz_eig(pca, choice = c("eigenvalue"), addlabels = T, ylim = c(0, 12))
 
-#Para saber cómo está compuesto cada uno de estos componentes, podemos generar un Biplot. Este tipo de gráfico nos aparecerá como vectores en dos dimensiones (que serán los dos primeros componentes del análisis).
+#Para saber cómo está compuesto cada uno de estos componentes, podemos generar un Biplot. 
+#Este tipo de gráfico nos aparecerá como vectores en dos dimensiones (que serán los dos primeros componentes del análisis).
 
 fviz_pca_biplot(pca, repel = F, col.var = "black", col.ind = "gray")
 
-#Componente 1
-#Todas las variables contribuyen positivamente (todas las flechas van hacia la derecha)
-#Es un factor general de satisfacción con la vida
-
-#Componente 2: personal vs contextual
-#Arriba: Satisfacción personal/individual
-#PA3_02 (salud), PA3_03 (logros), PA3_10 (libertad)
-#Abajo: Satisfacción contextual/social
-#PA3_11 (seguridad), PA3_15 (ciudad), PA3_17 (país)
-
-#Muy correlacionadas (flechas cercanas):
-#PA3_02, PA3_03, PA3_10: Salud, logros, libertad (bienestar personal)
-#PA3_15, PA3_17: Ciudad y país (contexto macro)
-#PA3_05, PA3_09: Vida social y tiempo libre (ocio social)
-
-#PA3_11 (seguridad) es especial
 
 #Para saber qué tanto contribuyen las variables dentro de cada dimensión
 fviz_contrib(pca, choice = "var", axes = 1, top = 10)
 fviz_contrib(pca, choice = "var", axes = 2, top = 10)
 fviz_contrib(pca, choice = "var", axes = 3, top = 10)
 
-#A medida que se crean estas nuevas dimensiones, pueden considerarse como nuevas variables a integrar en nuestra base de datos original, como se muestra a continuación:
+#A medida que se crean estas nuevas dimensiones, pueden considerarse como nuevas variables a integrar en nuestra base de datos original:
 base_modif2 <- bind_cols(base_modif2, as_tibble(pca$scores))
 
 
@@ -163,9 +134,6 @@ pca_1 <- PCA(base_num, graph = F)
 pca_1
 summary(pca_1)
 
-#var$coord: coordenadas de variables para crear un diagrama de dispersión
-#var$cos2: representa la calidad de representación de las variables en el mapa de factores, y se calcula como (var$coord)^2
-#var$contrib: contiene las contribuciones (en porcentaje) de las variables a los componentes principales, y es calculada con (var.cos2 * 100) / (cos2 total del componente).
 
 #Como vimos antes, podríamos retener los componentes que contienen un Eigenvalor mayor que 1, que podemos ver de nuevo en el gráfico:
 
@@ -175,16 +143,15 @@ fviz_eig(pca_1, choice = "eigenvalue", addlabels = T, ylim = c(0, 3))
 fviz_pca_biplot(pca_1, col.var = "contrib", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
 
 
-#Como pudimos ver de antemano, los componentes mayores de 1 son los tres primeros.  Para condensar los componentes elegidos en una sola variable, es necesario recordar cuánta varianza acumulada representan del total:
+#Los componentes mayores de 1 son los tres primeros.  
 
 eig <- get_eig(pca_1)
 eig
 
 #Podemos crear un índice ahora con los componentes
 #Veamos cada entidad
-
 pca_1$ind$coord
-#Eso es la matriz de coordenadas (scores) de tus individuos en los componentes principales.
+
 
 data_pca <- pca_1$ind$coord %>% # Obtiene la matriz de coordenadas (scores) de cada entidad en los componentes principales
   as_tibble() %>%
