@@ -9,7 +9,7 @@
 pacman::p_load("tidyverse", "factoextra", "GGally", "ggcorrplot", "FactoMineR")
 
 # Directorio
-setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/Taller estadística/Estadística 3/MGAP/Datos")
+setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/Taller estadística/Estadística 3/MPD/Datos")
 
 #Base
 base <- read.csv("TENBIARE.csv")
