@@ -128,6 +128,9 @@ base_modif2 %>%
   ) -> tabla
 
 
+# Ejercicio ---------------------------------------------------------------
 
+# 1. Replicar el ejercicio de clústers con estos datos: https://www.kaggle.com/datasets/jainaru/world-happiness-report-2024-yearly-updated
+# 2. ¿Cómo se conforman?, ¿qué tienen en común los países en cada clúster?
 
 
