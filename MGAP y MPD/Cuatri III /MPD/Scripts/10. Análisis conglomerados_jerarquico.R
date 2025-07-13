@@ -82,32 +82,12 @@ mat_dist <- dist(x=base_num, method="euclidean")
 
 #method sirve para especificar cómo se define la distancia de la unión de dos clusters al resto de los clusters 
 
-#El nombre del método se ha de entrar entrecomillado. 
 
-#La función hclust dispone de muchos métodos en este sentido, los más populares son los siguientes
-
-#Calculamos los clusters con la función
-#hclust
-
-#hclust(matriz_distancias, método)
+#La función hclust tiene muchos métodos 
 
 # MÉTODO 1: Complete Linkage
 # - Une clusters por la MAYOR distancia entre puntos de diferentes clusters
 clus_complete <- hclust(d = mat_dist, method = "complete")
-
-#Cluster A: con puntos {1, 2, 3}
-#Cluster B: con puntos {4, 5}
-
-#Complete Linkage calcula todas las distancias posibles entre puntos de diferentes clusters:
-  
-#Distancia entre punto 1 y punto 4
-#Distancia entre punto 1 y punto 5
-#Distancia entre punto 2 y punto 4
-#Distancia entre punto 2 y punto 5
-#Distancia entre punto 3 y punto 4
-#Distancia entre punto 3 y punto 5
-
-#Luego toma la MAYOR de todas esas distancias como la distancia entre cluster
 
 # MÉTODO 2: Average Linkage  
 # - Une clusters por la distancia PROMEDIO entre todos los puntos
@@ -118,7 +98,7 @@ clus_average <- hclust(d = mat_dist, method = "average")
 clus_ward <- hclust(d = mat_dist, method = "ward.D2")
 
 
-#correlaciones
+#Podemos ver las correlaciones
 
 #La correlación cofonética mide qué tan bien el dendrograma preserva las distancias originales de los datos.
 
@@ -126,14 +106,13 @@ cor_complete <- cor(mat_dist, cophenetic(clus_complete))
 cor_average <- cor(mat_dist, cophenetic(clus_average))
 cor_ward <- cor(mat_dist, cophenetic(clus_ward))
 
-#Si la prioridad es que el dendograma sea lo más cercano a los datos originales, entonces average.
-#Si la prioridad es que los clústers sean útiles e interpretables: ward.
 
 ##### Graficamos -----
 
-#Para poder comprender un clustering jerárquico, lo mejor es dibujarlo en forma de árbol binario o, en este contexto, de dendrograma, con los objetos que clasificamos en las hojas. Para ello le aplicamos simplemente la función plot. 
+#Para poder comprender un clustering jerárquico, lo mejor es dibujarlo en forma de dendrograma, con los objetos que clasificamos en las hojas. 
+#Para ello le aplicamos simplemente la función plot. 
 
-#Al usar esta función para representar gráficamente un clustering jerárquico, hay dos parámetros que hay que tener en cuenta (aparte de los usuales):
+#Hay dos parámetros que hay que tener en cuenta (aparte de los usuales):
 
 #hang, que controla la situación de las hojas del dendrograma respecto del margen inferior.
 #cex, controla el tamaño de la letra
@@ -174,16 +153,13 @@ par(mfrow = c(1, 1))  # Restaurar configuración de gráficos
 
 str(clus_1)
 
-#Como vemos, un clustering jerárquico producido con hclust es una lista. Sus dos componentes más interesantes para nosotros son las siguientes.
+#Como vemos, un clustering jerárquico producido con hclust es una lista. 
+#Sus dos componentes más interesantes para nosotros son:
 
 #Por un lado, merge es una matriz de dos columnas que indica el orden en el que se han ido agrupando los objetos de dos en dos. En esta matriz, los objetos originales se representan con números negativos, y los nuevos clusters con números positivos que indican el paso en el que se han creado. 
 
 #merge
 clus_1$merge
-
-#Se unen los estados 26 y 28 y crea el clúster 1
-#Se unen los estados 10 y 22 y crea el clúster 2
-#Se une el estado 23 con el Cluster 1 (formado en el paso 1)
 
 #La otra componente que nos interesa es height, un vector que contiene las distancias a las que se han ido agrupando los pares de clusters, representadas como alturas en el eje de ordenadas en el dendrograma. 
 
@@ -280,49 +256,10 @@ silhouette_scores
 sil_promedio <- mean(silhouette_scores[, "sil_width"])
 sil_promedio
 
-#> 0.7: Estructura fuerte
-#0.5-0.7: Estructura razonable
-#0.25-0.5: Estructura débil
-#< 0.25: Sin estructura clara
-
 # Gráfico de silueta
 fviz_silhouette(silhouette_scores, 
                 palette = c("#E74C3C", "#3498DB", "#2ECC71"),
                 ggtheme = theme_minimal()) +
   labs(title = "Análisis de Silueta por Cluster",
        subtitle = paste("Coeficiente promedio:", round(sil_promedio, 3)))
-
-#¿Qué es el Coeficiente de Silueta?
-#Es una medida que evalúa qué tan bien asignado está cada objeto a su cluster. Para cada estado, mide:
-
-#Qué tan similar es a los estados de su propio cluster
-#Qué tan diferente es de los estados de otros clusters
-
-
-#+1: Asignación perfecta (muy similar a su cluster, muy diferente a otros)
-#0: El estado está en el límite entre clusters (ambiguo)
-#-1: Asignación incorrecta (más similar a otro cluster)
-
-#el gráfico muestra estructura de clustering débil pero válida
-
-#Cluster 1 (Rojo):
-
-#La mayoría de barras están por encima de 0
-#Hay algunos estados con valores negativos (mal asignados)
-
-#Cluster 2 (Azul):
-
-#Barras más uniformemente positivas
-#Estados mejor asignados que el Cluster 1
-
-#Cluster 3 (Verde):
-
-#Pocas observaciones
-#Valores moderadamente positivos
-
-
-#Lo bueno: Los clusters tienen sentido estadístico (coeficiente > 0)
-#El Cluster 2 está bien definido
-#No hay muchos estados mal asignados
-#Algunos estados del Cluster 1 podrían estar mejor en otro cluster
 
