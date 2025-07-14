@@ -5,7 +5,7 @@
 # =========================================================
 
 # Previo ------------------------------------------------------------------
-pacman::p_load("tidyverse", "factoextra", "cluster")
+pacman::p_load("tidyverse", "factoextra", "cluster", "patchwork")
 
 # Directorio
 setwd("C:/Users/molar/Dropbox/2025_Trabajos/FLACSO/Taller estadística/Estadística 3/MGAP/Datos")
