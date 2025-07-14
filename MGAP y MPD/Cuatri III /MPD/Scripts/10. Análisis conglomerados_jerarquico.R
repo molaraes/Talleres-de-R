@@ -151,7 +151,7 @@ plot(clus_ward,
 
 par(mfrow = c(1, 1))  # Restaurar configuración de gráficos
 
-str(clus_1)
+str(clus_average)
 
 #Como vemos, un clustering jerárquico producido con hclust es una lista. 
 #Sus dos componentes más interesantes para nosotros son:
@@ -159,14 +159,14 @@ str(clus_1)
 #Por un lado, merge es una matriz de dos columnas que indica el orden en el que se han ido agrupando los objetos de dos en dos. En esta matriz, los objetos originales se representan con números negativos, y los nuevos clusters con números positivos que indican el paso en el que se han creado. 
 
 #merge
-clus_1$merge
+clus_average$merge
 
 #La otra componente que nos interesa es height, un vector que contiene las distancias a las que se han ido agrupando los pares de clusters, representadas como alturas en el eje de ordenadas en el dendrograma. 
 
 #height
-clus_1$height
-clus_2$height
-clus_3$height
+clus_average$height
+clus_complete$height
+clus_ward$height
 
 #Dónde cortar el dendograma
 #Con R disponemos de dos funciones básicas para obtener agrupamientos a partir de un clustering jerárquico. La primera es la función cutree. 
