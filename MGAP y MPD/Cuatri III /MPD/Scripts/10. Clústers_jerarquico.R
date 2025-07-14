@@ -192,25 +192,25 @@ cutree(clus_ward, k=2) #k es el num clusters
 
 #visualizar
 plot(clus_complete, hang=-1, cex=0.6)
-rect.hclust(clus_1, h=11)
+rect.hclust(clus_complete, h=11)
 
 plot(clus_complete, hang=-1, cex=0.6)
-rect.hclust(clus_1, k=4)
+rect.hclust(clus_complete, k=4)
 
 plot(clus_average, hang=-1, cex=0.6)
-rect.hclust(clus_1, h=11)
+rect.hclust(clus_average, h=11)
 
 plot(clus_average, hang=-1, cex=0.6)
-rect.hclust(clus_1, k=4)
+rect.hclust(clus_average, k=4)
 
 plot(clus_ward, hang=-1, cex=0.6)
-rect.hclust(clus_1, h=11)
+rect.hclust(clus_ward, h=11)
 
 plot(clus_ward, hang=-1, cex=0.6)
-rect.hclust(clus_1, k=4)
+rect.hclust(clus_ward, k=4)
 
 #Dendograma con factoextra
-p1 <- fviz_dend(clus_complete, 
+p1 <- fviz_dend(clus_average, 
                 cex = 0.6,                    # Tamaño de texto
                 k = 3,                        # Número de clusters
                 rect = TRUE,                  # Mostrar rectángulos
@@ -222,7 +222,7 @@ p1 <- fviz_dend(clus_complete,
 print(p1)
 
 # Comparar los tres métodos con k=3
-p2 <- fviz_dend(clus_average, cex = 0.6, k = 3, rect = TRUE, 
+p2 <- fviz_dend(clus_complete, cex = 0.6, k = 3, rect = TRUE, 
                 main = "Average Linkage (k=3)")
 p3 <- fviz_dend(clus_ward, cex = 0.6, k = 3, rect = TRUE,
                 main = "Ward D2 (k=3)")
