@@ -221,6 +221,8 @@ p1 <- fviz_dend(clus_average,
 
 print(p1)
 
+p1 | p2 | p3
+
 # Comparar los tres métodos con k=3
 p2 <- fviz_dend(clus_complete, cex = 0.6, k = 3, rect = TRUE, 
                 main = "Average Linkage (k=3)")
