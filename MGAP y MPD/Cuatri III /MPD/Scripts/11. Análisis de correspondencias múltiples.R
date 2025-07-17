@@ -1,5 +1,5 @@
 # Análisis de Correspondencias Mútiples ----
-# Autor: Gerardo Damián
+# Autor: Gerardo Damián (g.damian@crim.unam.mx)
 #
 # Taller de Estadística III - Maestría en Población y Desarrollo FLACSO México. Titular: Dra. Mónica Lara Escalante
 # 17-07-2024
