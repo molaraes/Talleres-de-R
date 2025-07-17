@@ -897,3 +897,56 @@ fviz_mca_var(acm,
 # fviz_mca_ind(acm, axes = c(1, 14),)
 
 # fviz_mca_biplot(acm, axes = c(1, 14), repel = TRUE)
+
+
+# Sólo considerar la Dim1: "Autonomía vs Dependencia"
+
+# Extraer coordenadas de Dim1 para individuos
+coordenadas_dim1 <- acm$ind$coord[, 1]
+
+# Índice normalizado
+# Normalizar coordenadas (0 a 100)
+indice <- ((coordenadas_dim1 - min(coordenadas_dim1)) /
+                       (max(coordenadas_dim1) - min(coordenadas_dim1))) * 100
+
+# Agregar índice a base
+base$indice <- indice
+
+# Categorías del índice
+base <- base %>%
+  mutate(
+    indice_cat = case_when(
+      indice >= 0 & indice < 33.33 ~ "Ocupados: jóvenes-adultos",
+      indice >= 33.33 & indice < 66.67 ~ "Intermedios",
+      indice >= 66.67 & indice <= 100 ~ "Desocupados adultos mayores/PNEA"
+    ),
+    indice_cat = factor(indice_cat,
+                                 levels = c("Ocupados: jóvenes-adultos", "Intermedios", "Desocupados adultos mayores/PNEA"))
+  )
+
+# Revisar índice
+summary(base$indice)
+
+# Revisar índice categórico
+base %>%
+  tabyl(indice_cat) %>%
+  adorn_pct_formatting()
+
+# Validar índice con asociaciones a otras variables
+# Teóricamente: Dim1 separa ocupados-jóvenes-adultos vs PNEA/adultos mayores
+
+# Relación con pea
+tabla_pea <- table(base$pea_status, base$indice_cat)
+addmargins(tabla_pea)
+chisq.test(tabla_pea)
+
+# Relación con edad
+tabla_edad <- table(base$gpo_edad, base$indice_cat)
+addmargins(tabla_edad)
+chisq.test(tabla_edad)
+
+# Correlación con otras variables: satisfacción con la vida
+cor.test(base$indice, as.numeric(base$satisf_vida_actual))
+
+# Confirmar con correlación de spearman dado que satisfacción con la vida es categórico
+cor.test(base$indice, as.numeric(base$satisf_vida_actual), method = "spearman")
